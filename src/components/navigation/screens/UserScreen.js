@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
 import { SafeAreaView } from "react-native-safe-area-context";
-const Perfil = () => {
+const UserScreen = () => {
   const navigation = useNavigation();
 
   const FotoPerfilURL = 'https://vivolabs.es/wp-content/uploads/2022/03/perfil-mujer-vivo.png';
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
-export default Perfil;
+export default UserScreen;
