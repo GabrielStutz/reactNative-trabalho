@@ -9,7 +9,7 @@ import DetailsScreen from './screens/DetailsScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import UserScreen from './screens/UserScreen';
 import InfoScreen from './screens/InfoScreen';
-import InfoScreen from './screens/DonateScreen';
+import DonateScreen from './screens/DonateScreen';
 
 //Screen names
 const homeName = "Home";
@@ -18,6 +18,7 @@ const settingsName = "Settings";
 const userName = "User";
 
 const Tab = createBottomTabNavigator();
+
 
 function MainContainer() {
   return (
@@ -54,7 +55,8 @@ function MainContainer() {
           labelStyle: { paddingBottom: 10, fontSize: 10 },
           style: { padding: 10, height: 70}
         }}>
-        <Tab.Screen name="InfoScreen" component={InfoScreen} />
+        <Tab.Screen name="Info" component={InfoScreen} options= {{tabBarStyle: {display: 'none'}}}/>
+        <Tab.Screen name="Donate" component={DonateScreen} options= {{tabBarStyle: {display: 'none'}}}/>
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
