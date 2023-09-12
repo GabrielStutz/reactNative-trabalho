@@ -6,15 +6,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Screens
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
-import SettingsScreen from './screens/SettingsScreen';
 import UserScreen from './screens/UserScreen';
-import InfoScreen from './screens/InfoScreen';
-import InfoScreen from './screens/DonateScreen';
+//import InfoScreen from './screens/Info';
+//import DonateScreen from './screens/DonateScreen';
 
 //Screen names
 const homeName = "Home";
-const detailsName = "Details";
-const settingsName = "Settings";
+const detailsName = "Criar";
 const userName = "User";
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +21,7 @@ function MainContainer() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-      
+
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
           headerShown: false,
@@ -35,16 +33,15 @@ function MainContainer() {
               iconName = focused ? 'home' : 'home-outline';
 
             } else if (rn === detailsName) {
-              iconName = focused ? 'list' : 'list-outline';
+              iconName = focused ? 'add' : 'add-outline';
 
-            } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
             }
             else if(rn === userName) 
             {
               iconName = focused ? 'person' : 'person-outline';
             }
 
+            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
@@ -54,10 +51,9 @@ function MainContainer() {
           labelStyle: { paddingBottom: 10, fontSize: 10 },
           style: { padding: 10, height: 70}
         }}>
-        <Tab.Screen name="InfoScreen" component={InfoScreen} />
+
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
         <Tab.Screen name={userName} component={UserScreen}/>
       </Tab.Navigator>
     </NavigationContainer>
