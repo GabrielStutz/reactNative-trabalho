@@ -14,7 +14,7 @@ import DonateScreen from './screens/DonateScreen';
 //Screen names
 const homeName = "Inicio";
 const createName = "Criar";
-const userName = "Usuario";
+const userName = "User";
 
 const Tab = createBottomTabNavigator();
 

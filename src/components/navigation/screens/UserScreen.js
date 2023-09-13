@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   image: {
-    width: 20,
-    height: 20,
+    width: 40,
+    height: 40,
     marginRight: 16,
   },
   Informacoes: {
