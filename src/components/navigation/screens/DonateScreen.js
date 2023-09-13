@@ -39,7 +39,7 @@ const DonateScreen = ({ navigation }) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.backButton}
-      onPress={() => navigation.navigate('User')}
+      onPress={() => navigation.navigate('Usuario')}
     >
       <Text style={styles.backButtonText}>←</Text>
     </TouchableOpacity>

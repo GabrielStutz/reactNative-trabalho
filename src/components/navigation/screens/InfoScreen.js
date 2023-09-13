@@ -7,7 +7,7 @@ const Info = () => {
   const navigation = useNavigation();
 
   function VoltaUser() {
-    navigation.navigate('User');
+    navigation.navigate('Usuario');
   }
 
   return (
