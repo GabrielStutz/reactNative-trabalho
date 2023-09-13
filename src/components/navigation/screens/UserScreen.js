@@ -14,7 +14,9 @@ const UserScreen = () => {
   const irParaInfo = () => {
     navigation.navigate('Info');
   };
-
+  const irParaDonate = () => {
+    navigation.navigate('Donate');
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -35,7 +37,7 @@ const UserScreen = () => {
       <View style={styles.Divisoria} />
       <View style={styles.containerDoa}>
         <Image source={coracao} style={styles.image} />
-        <TouchableOpacity onPress={handleTextClick}>
+        <TouchableOpacity onPress={irParaDonate}>
           <Text style={styles.Doacoes}>Minhas doações</Text>
         </TouchableOpacity>
       </View>
