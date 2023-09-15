@@ -6,10 +6,11 @@ import { Text } from 'react-native';
 
 // Screens
 import HomeScreen from './screens/HomeScreen';
-import CreateScreen from './screens/CreateScreen';
+import CreateButtonScreen from './screens/CreateButtonScreen';
 import UserScreen from './screens/UserScreen';
 import InfoScreen from './screens/InfoScreen';
 import DonateScreen from './screens/DonateScreen';
+import CreateImageScreen from './screens/CreateImageScreen'
 
 //Screen names
 const homeName = "Inicio";
@@ -58,10 +59,11 @@ function MainContainer() {
           }
         })}
       >
+        <Tab.Screen name="CreateImageScreen" component={CreateImageScreen} options={{ tabBarItemStyle: { display: 'none' } }} />     
         <Tab.Screen name="Info" component={InfoScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
         <Tab.Screen name="Donate" component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={createName} component={CreateScreen} />
+        <Tab.Screen name={createName} component={CreateButtonScreen} />
         <Tab.Screen name={userName} component={UserScreen} />
       </Tab.Navigator>
     </NavigationContainer>
