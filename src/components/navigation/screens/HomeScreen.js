@@ -1,11 +1,12 @@
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
     return (
-        <View style={styles.View}>
+        <SafeAreaView style={styles.View}>
             <Text onPress={() => alert("This is the home screen.")} style={styles.Text}>Home Screen</Text>
-        </View>
+        </SafeAreaView>
     );
 };
 

@@ -39,7 +39,7 @@ const DonateScreen = ({ navigation }) => (
   <View style={styles.container}>
     <TouchableOpacity
       style={styles.backButton}
-      onPress={() => navigation.navigate('Usuario')}
+      onPress={() => navigation.navigate('User')}
     >
       <Text style={styles.backButtonText}>←</Text>
     </TouchableOpacity>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   locationTitle: {
     fontSize: 18,
-    color: 'purple',
+    color: 'ss',
     fontWeight: 'bold', // Deixa o título em negrito
     marginBottom: 10,
   },

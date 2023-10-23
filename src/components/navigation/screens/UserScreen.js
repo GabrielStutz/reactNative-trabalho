@@ -11,10 +11,10 @@ const UserScreen = () => {
 
   const handleTextClick = () => {
   };
-  const irParaInfo = () => {
+  const goToInfo = () => {
     navigation.navigate('Info');
   };
-  const irParaDonate = () => {
+  const goToDonate = () => {
     navigation.navigate('Donate');
   };
   return (
@@ -30,14 +30,14 @@ const UserScreen = () => {
       <View style={styles.Divisoria} />
       <View style={styles.containerInf}>
         <Image source={rosto} style={styles.image} />
-        <TouchableOpacity onPress={irParaInfo}>
+        <TouchableOpacity onPress={goToInfo}>
           <Text style={styles.Informacoes}>Informações pessoais</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.Divisoria} />
       <View style={styles.containerDoa}>
         <Image source={coracao} style={styles.image} />
-        <TouchableOpacity onPress={irParaDonate}>
+        <TouchableOpacity onPress={goToDonate}>
           <Text style={styles.Doacoes}>Minhas doações</Text>
         </TouchableOpacity>
       </View>

@@ -6,14 +6,14 @@ const Info = () => {
   const FotoPerfilURL = 'https://vivolabs.es/wp-content/uploads/2022/03/perfil-mujer-vivo.png';
   const navigation = useNavigation();
 
-  function VoltaUser() {
-    navigation.navigate('Usuario');
+  function goToUser() {
+    navigation.navigate('User');
   }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => VoltaUser()}>
-        <Text style={styles.backButton}>{`< Voltar`}</Text>
+      <TouchableOpacity onPress={() => goToUser()}>
+        <Text style={styles.backButton}>{`← Voltar`}</Text>
       </TouchableOpacity>
       <View style={styles.Divisoria} />
       <Text style={styles.InfoTit}>Usuario:</Text>

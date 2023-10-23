@@ -10,11 +10,17 @@ import CreateScreen from './screens/CreateScreen';
 import UserScreen from './screens/UserScreen';
 import InfoScreen from './screens/InfoScreen';
 import DonateScreen from './screens/DonateScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 //Screen names
-const homeName = "Inicio";
-const createName = "Criar";
-const userName = "Usuario";
+const homeName = "Home";
+const createName = "Create";
+const userName = "User";
+const donateName = "Donate";
+const infoName = "Info";
+const registerName = "Register";
+const loginName = "Login"
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +30,7 @@ function MainContainer() {
     <NavigationContainer>
       <Tab.Navigator
 
-        initialRouteName={homeName}
+        initialRouteName={registerName}
         screenOptions={({ route }) => ({
           // tabBarStyle: {
           //   activeTintColor: 'purple',
@@ -58,8 +64,10 @@ function MainContainer() {
           }
         })}
       >
-        <Tab.Screen name="Info" component={InfoScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
-        <Tab.Screen name="Donate" component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+        <Tab.Screen name={loginName} component={LoginScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+        <Tab.Screen name={registerName} component={RegisterScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+        <Tab.Screen name={infoName} component={InfoScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+        <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={createName} component={CreateScreen} />
         <Tab.Screen name={userName} component={UserScreen} />
