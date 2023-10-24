@@ -39,7 +39,7 @@ function MainContainer() {
           //   style: { padding: 10, height: 70 },
           // },
           headerShown: false,
-          tabBarIcon: ({ focused, size  }) => {
+          tabBarIcon: ({ focused, size }) => {
             let iconName;
             let iconColor;
             let rn = route.name;
