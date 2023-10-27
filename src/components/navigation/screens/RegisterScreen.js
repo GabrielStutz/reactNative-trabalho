@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -8,9 +8,6 @@ const Stack = createStackNavigator();
 const RegisterScreen = () => {
     const navigation = useNavigation();
 
-    const goToHome = () => {
-        navigation.navigate('Home');
-    };
     const goToLogin = () => {
     navigation.navigate('Login');
     };
@@ -20,10 +17,10 @@ const RegisterScreen = () => {
     return(
         <SafeAreaView style={styles.container}>
             <Image source={require('../../../../assets/HELPI.png')} style={styles.logoImage} />
-            <Text>Cadastro</Text>
+            <Text style={styles.titulo}>Cadastro</Text>
             <Text style={styles.text}>Nome</Text>
             <TextInput 
-                style={styles.textinput}
+                style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
@@ -33,8 +30,8 @@ const RegisterScreen = () => {
                 value={value}
             />            
             <Text style={styles.text}>Telefone</Text>
-            <TextInput 
-                style={styles.textinput}
+            <TextInput
+                style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
@@ -45,7 +42,7 @@ const RegisterScreen = () => {
             />
             <Text style={styles.text}>Email</Text>
             <TextInput 
-                style={styles.textinput}
+                style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
@@ -56,7 +53,7 @@ const RegisterScreen = () => {
             />
             <Text style={styles.text}>Senha</Text>
             <TextInput 
-                style={styles.textinput}
+                style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
@@ -67,7 +64,7 @@ const RegisterScreen = () => {
             />
             <Text style={styles.text}>Confirmar senha</Text>
             <TextInput 
-                style={styles.textinput}
+                style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
@@ -76,7 +73,7 @@ const RegisterScreen = () => {
                 placeholder= 'Confirmar senha'
                 value={value}
             />
-            <TouchableOpacity style={styles.registerButton} onPress={goToHome}>
+            <TouchableOpacity style={styles.registerButton} onPress={goToLogin}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
             <Text style={styles.loginButton} onPress={goToLogin}>Logar</Text>
@@ -85,24 +82,36 @@ const RegisterScreen = () => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#a24fb0',
+        padding: 20,
+    },
     logoImage: {
-        width: 175,
-        height: 175,
+        width: 150,
+        height: 150,
         borderRadius: 100,
         alignSelf: 'center',
         marginTop: 15,
     },
     titulo: {
+        color: '#FFFFFF',
         fontSize: 25,
         fontWeight: 'bold',
     },
-    buttonText: {
+    text: {
         color: '#FFFFFF',
+        fontSize: 15,
+        marginTop: 15,
+        marginLeft: 5,
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#a24fb0',
-        padding: 20,
+    textInput: {
+        backgroundColor: '#FFFFFF',
+        height: 50,
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 15,
+        fontSize: 15,
     },
     registerButton: {
         backgroundColor: 'purple',
@@ -111,23 +120,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 25,
       },
-    text: {
+    buttonText: {
         color: '#FFFFFF',
-        fontSize: 15,
-        marginTop: 15,
-        marginLeft: 5,
-    },
-    textinput: {
-        backgroundColor: '#FFFFFF',
-        height: 50,
-        padding: 10,
-        borderRadius: 10,
-        marginTop: 15,
     },
     loginButton: {
         color: '#1bd39d',
         textAlign: 'center',
         marginTop: 10,
+        fontSize: 15,
     }
 })
+
 export default RegisterScreen;
