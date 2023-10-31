@@ -4,7 +4,7 @@
     "slug": "reactNative",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/helpii_logo.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/helpii_photo.jpeg",
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/helpii_photo.jpeg",
+        "backgroundColor": "#a24fb0"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/helpii_photo.jpeg"
     }
   }
 }

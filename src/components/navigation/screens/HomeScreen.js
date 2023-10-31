@@ -1,11 +1,15 @@
 import * as React from "react";
-import { StyleSheet, Text, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, View, Image, Text} from "react-native";
 
 export default function HomeScreen() {
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.donation}>
-                
+            <View style={styles.homeDonationTitle}>
+                <Image source={require('../../../../assets/imagem_perfil_mickey.webp')} style={styles.logoImage} />
+                <Text style={styles.text}>Mickey Mouse</Text>
+            </View>
+            <View style={styles.homeDonationImage}>
+                <Image></Image>
             </View>
         </SafeAreaView>
     );
@@ -13,14 +17,28 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#a24fb0",
+        flex: 1,
+        backgroundColor: '#a24fb0',
     },
-    donation: {
-        backgroundColor: "purple",
+    homeDonationTitle: {
+        backgroundColor: 'purple',
+        marginTop: 50,
+        padding: 20,
+        flexDirection: 'row',
+    },
+    homeDonationImage: {
+
+    },
+    logoImage: {
+        width: 75,
+        height: 75,
+        borderRadius: 100,
+        marginTop: 10,
     },
     text: {
         color: 'white',
-        fontSize: 26,
-        fontWeight: "bold",
+        fontSize: 20,
+        marginTop: 30,
+        marginLeft: 30,
     },
 });

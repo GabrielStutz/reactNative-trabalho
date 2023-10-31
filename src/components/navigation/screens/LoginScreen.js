@@ -15,7 +15,8 @@ const LoginScreen = () => {
         navigation.navigate('Home');
     };
 
-    const [value, onChangeText] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [password, onChangePassword] = React.useState('');
 
     return(
             <SafeAreaView style={styles.container}>
@@ -28,9 +29,9 @@ const LoginScreen = () => {
                     multiline
                     numberOfLines={1}
                     maxLength={40}
-                    onChangeText={text => onChangeText(text)}
+                    onChangeText={email => onChangeEmail(email)}
                     placeholder= 'Email'
-                    value={value}
+                    value={email}
                 />
                 <Text style={styles.text}>Senha</Text>
                 <TextInput 
@@ -39,9 +40,9 @@ const LoginScreen = () => {
                     multiline
                     numberOfLines={1}
                     maxLength={40}
-                    onChangeText={text => onChangeText(text)}
+                    onChangeText={password => onChangePassword(password)}
                     placeholder= 'Senha'
-                    value={value}
+                    value={password}
                 />
                 <TouchableOpacity style={styles.loginButton} onPress={goToHome}>
                     <Text style={styles.buttonText}>Logar</Text>

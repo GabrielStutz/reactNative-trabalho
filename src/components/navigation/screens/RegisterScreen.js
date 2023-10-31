@@ -12,7 +12,11 @@ const RegisterScreen = () => {
     navigation.navigate('Login');
     };
 
-    const [value, onChangeText] = React.useState('');
+    const [name, onChangeName] = React.useState('');
+    const [cellphone, onChangeCellphone] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [password, onChangePassword] = React.useState('');
+    const [confirmPassword, onChangeConfirmPassword] = React.useState('');
 
     return(
         <SafeAreaView style={styles.container}>
@@ -25,42 +29,44 @@ const RegisterScreen = () => {
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={text => onChangeText(text)}
+                onChangeText={name => onChangeName(name)}
                 placeholder= 'Nome'
-                value={value}
+                value={name}
             />            
             <Text style={styles.text}>Telefone</Text>
             <TextInput
                 style={styles.textInput}
                 editable        
                 multiline
+                inputMode='tel'
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={text => onChangeText(text)}
+                onChangeText={cellphone => onChangeCellphone(cellphone)}
                 placeholder= 'Telefone'
-                value={value}
+                value={cellphone}
             />
             <Text style={styles.text}>Email</Text>
             <TextInput 
                 style={styles.textInput}
                 editable        
                 multiline
+                inputMode='email'
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={text => onChangeText(text)}
+                onChangeText={email => onChangeEmail(email)}
                 placeholder= 'Email'
-                value={value}
+                value={email}
             />
             <Text style={styles.text}>Senha</Text>
-            <TextInput 
+            <TextInput
                 style={styles.textInput}
                 editable        
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={text => onChangeText(text)}
+                onChangeText={password => onChangePassword(password)}
                 placeholder= 'Senha'
-                value={value}
+                value={password}
             />
             <Text style={styles.text}>Confirmar senha</Text>
             <TextInput 
@@ -69,9 +75,9 @@ const RegisterScreen = () => {
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={text => onChangeText(text)}
+                onChangeText={confirmPassword => onChangeConfirmPassword(confirmPassword)}
                 placeholder= 'Confirmar senha'
-                value={value}
+                value={confirmPassword}
             />
             <TouchableOpacity style={styles.registerButton} onPress={goToLogin}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
