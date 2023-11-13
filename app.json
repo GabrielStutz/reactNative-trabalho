@@ -30,7 +30,15 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "DEU ERRADO."
+          "photosPermission": "Não foi permitido"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": false
+          }
         }
       ]
     ]

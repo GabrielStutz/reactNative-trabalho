@@ -41,7 +41,7 @@ const DonateScreen = ({ navigation }) => (
       style={styles.backButton}
       onPress={() => navigation.navigate('User')}
     >
-      <Text style={styles.backButtonText}>←</Text>
+      <Text style={styles.backButtonText}>ᐊ</Text>
     </TouchableOpacity>
     <Text style={styles.title}>Minhas doações</Text>
     {locations.map((location, index) => (

@@ -16,9 +16,9 @@ const ClickableImage = ({ imageUri, onChangeImage }) => {
       base64: true,
       quality: 1,
     });
-    if (!result.cancelled) {
-      setImage(result.uri);
-      onChangeImage(result.uri);
+    if (!result.canceled) {
+      setImage(result.assets[0].uri); 
+      onChangeImage(result.assets[0].uri); 
     }
   };
 
@@ -28,10 +28,10 @@ const ClickableImage = ({ imageUri, onChangeImage }) => {
         <Image
           source={{ uri: image }}
           style={{ 
-        width: 150, 
-        height: 150, 
-        marginRight: 10
-        }}
+            width: 150, 
+            height: 150, 
+            marginRight: 10
+          }}
         />
       </View>
     </TouchableOpacity>
