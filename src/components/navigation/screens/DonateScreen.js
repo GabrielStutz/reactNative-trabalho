@@ -41,7 +41,7 @@ const DonateScreen = ({ navigation }) => (
       style={styles.backButton}
       onPress={() => navigation.navigate('User')}
     >
-      <Text style={styles.backButtonText}>←</Text>
+      <Text style={styles.backButtonText}>ᐊ</Text>
     </TouchableOpacity>
     <Text style={styles.title}>Minhas doações</Text>
     {locations.map((location, index) => (
@@ -73,8 +73,12 @@ const DetailsScreen = ({ route }) => (
 );
 
 const App = () => (
-  <Stack.Navigator initialRouteName="Donate">
-    <Stack.Screen name="Donate" component={DonateScreen} />
+  <Stack.Navigator initialRouteName="Donate"
+       screenOptions={{
+       headerStyle: { backgroundColor: '#a24fb0' },
+       headerShadowVisible: false, 
+       headerTintColor: 'white'}}>
+    <Stack.Screen name="Doações" component={DonateScreen} />
     <Stack.Screen name="Details" component={DetailsScreen} />
   </Stack.Navigator>
 );

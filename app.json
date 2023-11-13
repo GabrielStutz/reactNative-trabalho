@@ -24,7 +24,23 @@
       }
     },
     "web": {
-      "favicon": "./assets/helpii_photo.jpeg"
-    }
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Não foi permitido"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": false
+          }
+        }
+      ]
+    ]
   }
 }
