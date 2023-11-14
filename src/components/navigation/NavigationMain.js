@@ -4,41 +4,32 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text } from 'react-native';
 
-// Screens
 import HomeScreen from './screens/HomeScreen';
 import CreateButtonScreen from './screens/CreateButtonScreen';
 import UserScreen from './screens/UserScreen';
 import InfoScreen from './screens/InfoScreen';
 import DonateScreen from './screens/DonateScreen';
-import CreateImageScreen from './screens/CreateImageScreen'
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import LocationScreen from './screens/LocationScreen';
 
-//Screen names
 const homeName = "Home";
 const createName = "Create";
 const userName = "User";
 const donateName = "Donate";
 const infoName = "Info";
 const registerName = "Register";
-const loginName = "Login"
+const loginName = "Login";
+const locationName = "Location";
 
 const Tab = createBottomTabNavigator();
-
 
 function MainContainer() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-
         initialRouteName={registerName}
         screenOptions={({ route }) => ({
-          // tabBarStyle: {
-          //   activeTintColor: 'purple',
-          //   inactiveTintColor: '#050038',
-          //   labelStyle: { paddingBottom: 10, fontSize: 10 },
-          //   style: { padding: 10, height: 70 },
-          // },
           headerShown: false,
           tabBarIcon: ({ focused, size }) => {
             let iconName;
@@ -54,7 +45,7 @@ function MainContainer() {
             } else if (rn === userName) {
               iconName = focused ? 'person' : 'person-outline';
               iconColor = focused ? '#a24fb0' : '#000'; 
-            }
+            } 
 
             return <Ionicons name={iconName} size={size} color={iconColor} />;
           },
@@ -72,6 +63,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={createName} component={CreateButtonScreen} />
         <Tab.Screen name={userName} component={UserScreen} />
+        <Tab.Screen name={locationName} component={LocationScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
       </Tab.Navigator>
     </NavigationContainer>
   );
