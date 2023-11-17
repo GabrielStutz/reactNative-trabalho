@@ -15,7 +15,7 @@ const UserScreen = () => {
   }, []);
 
   const fetchUsers = () => {
-    fetch('https://dcf3-2804-1b0-1903-81d4-3858-2faa-334c-7ffd.ngrok-free.app/api/user', {
+    fetch('https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user', {
       method: 'GET',
       headers: {
         Origin: '*',

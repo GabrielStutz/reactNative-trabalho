@@ -2,8 +2,12 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../autenticacao/AuthContext';
+import { useContext } from 'react/cjs/react.production.min';
 
 const Stack = createStackNavigator();
+const userAuth = useContext(AuthContext);
 
 const LoginScreen = () => {
     const navigation = useNavigation();
@@ -16,7 +20,31 @@ const LoginScreen = () => {
     };
 
     const [email, onChangeEmail] = React.useState('');
-    const [password, onChangePassword] = React.useState('');
+    const [senha, onChangePassword] = React.useState('');
+
+    const logar = async () => {
+        try {
+            console.log(email)
+            console.log(senha)
+            const url = `https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/autenticacao/login?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
+            const response = await fetch(url, {
+            method: 'POST',
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            const { token, user } = data;
+
+            console.log(token)
+            userAuth.setUserToken(token);
+            navigation.navigate(goToHome);
+          } else {
+            console.error('Credenciais inválidas. Status:', response.status);
+          }
+        } catch (error) {
+          console.error('Erro ao fazer login:', error.message);
+        }
+      };
 
     return(
             <SafeAreaView style={styles.container}>
@@ -40,11 +68,11 @@ const LoginScreen = () => {
                     multiline
                     numberOfLines={1}
                     maxLength={40}
-                    onChangeText={password => onChangePassword(password)}
+                    onChangeText={senha => onChangePassword(senha)}
                     placeholder= 'Senha'
-                    value={password}
+                    value={senha}
                 />
-                <TouchableOpacity style={styles.loginButton} onPress={goToHome}>
+                <TouchableOpacity style={styles.loginButton} onPress={logar}>
                     <Text style={styles.buttonText}>Logar</Text>
                 </TouchableOpacity>
                 <Text style={styles.registerButton} onPress={goToRegister}>Cadastrar</Text>

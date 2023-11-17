@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native';
 
 // Screens
@@ -27,53 +28,77 @@ const Tab = createBottomTabNavigator();
 
 
 function MainContainer() {
+  const [tokenChecked, setTokenChecked] = useState(false);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        await AsyncStorage.removeItem('userToken');
+        const token = await AsyncStorage.getItem('userToken');
+        console.log(token)
+
+        if (token) {
+          setTokenChecked(true);
+          navigation.navigate('Home');
+        } else {
+          setTokenChecked(true);
+          navigation.navigate('Login');
+        }
+      } catch (error) {
+        console.error('Erro ao verificar o token:', error.message);
+      }
+    };
+
+    checkToken();
+
+  }, [navigation]);
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
+    <Tab.Navigator
 
-        initialRouteName={registerName}
-        screenOptions={({ route }) => ({
-          // tabBarStyle: {
-          //   activeTintColor: 'purple',
-          //   inactiveTintColor: '#050038',
-          //   labelStyle: { paddingBottom: 10, fontSize: 10 },
-          //   style: { padding: 10, height: 70 },
-          // },
-          headerShown: false,
-          tabBarIcon: ({ focused, size }) => {
-            let iconName;
-            let iconColor;
-            let rn = route.name;
+      initialRouteName={loginName}
+      screenOptions={({ route }) => ({
+        // tabBarStyle: {
+        //   activeTintColor: 'purple',
+        //   inactiveTintColor: '#050038',
+        //   labelStyle: { paddingBottom: 10, fontSize: 10 },
+        //   style: { padding: 10, height: 70 },
+        // },
+        headerShown: false,
+        tabBarIcon: ({ focused, size }) => {
+          let iconName;
+          let iconColor;
+          let rn = route.name;
 
-            if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-              iconColor = focused ? '#a24fb0' : '#000'; 
-            } else if (rn === createName) {
-              iconName = focused ? 'add' : 'add-outline';
-              iconColor = focused ? '#a24fb0' : '#000'; 
-            } else if (rn === userName) {
-              iconName = focused ? 'person' : 'person-outline';
-              iconColor = focused ? '#a24fb0' : '#000'; 
-            }
-
-            return <Ionicons name={iconName} size={size} color={iconColor} />;
-          },
-          tabBarLabel: ({ focused, children }) => {
-            return (
-              <Text style={{ color: `${focused ? '#a24fb0' : '#000' }` }}>{children}</Text>
-            )
+          if (rn === homeName) {
+            iconName = focused ? 'home' : 'home-outline';
+            iconColor = focused ? '#a24fb0' : '#000';
+          } else if (rn === createName) {
+            iconName = focused ? 'add' : 'add-outline';
+            iconColor = focused ? '#a24fb0' : '#000';
+          } else if (rn === userName) {
+            iconName = focused ? 'person' : 'person-outline';
+            iconColor = focused ? '#a24fb0' : '#000';
           }
-        })}
-      >
-        <Tab.Screen name={loginName} component={LoginScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
-        <Tab.Screen name={registerName} component={RegisterScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
-        <Tab.Screen name={infoName} component={InfoScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
-        <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={createName} component={CreateButtonScreen} />
-        <Tab.Screen name={userName} component={UserScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+
+          return <Ionicons name={iconName} size={size} color={iconColor} />;
+        },
+        tabBarLabel: ({ focused, children }) => {
+          return (
+            <Text style={{ color: `${focused ? '#a24fb0' : '#000'}` }}>{children}</Text>
+          )
+        }
+      })}
+    >
+      <Tab.Screen name={loginName} component={LoginScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+      <Tab.Screen name={registerName} component={RegisterScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+      <Tab.Screen name={infoName} component={InfoScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+      <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' } }} />
+      <Tab.Screen name={homeName} component={HomeScreen} />
+      <Tab.Screen name={createName} component={CreateButtonScreen} />
+      <Tab.Screen name={userName} component={UserScreen} />
+    </Tab.Navigator>
   );
 }
 

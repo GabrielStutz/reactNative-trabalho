@@ -12,11 +12,46 @@ const RegisterScreen = () => {
     navigation.navigate('Login');
     };
 
-    const [name, onChangeName] = React.useState('');
-    const [cellphone, onChangeCellphone] = React.useState('');
+    const [nome, onChangeName] = React.useState('');
+    const [telefone, onChangeCellphone] = React.useState('');
     const [email, onChangeEmail] = React.useState('');
-    const [password, onChangePassword] = React.useState('');
-    const [confirmPassword, onChangeConfirmPassword] = React.useState('');
+    const [senha, onChangePassword] = React.useState('');
+    const [confirmaSenha, onChangeConfirmPassword] = React.useState('');
+
+    const cadastrarUsuario = async () => {
+        try {
+          if (senha !== confirmaSenha) {
+            console.error('As senhas não coincidem.');
+            return;
+          }
+    
+          const userData = {
+            nome,
+            email,
+            senha,
+            telefone,
+          };
+
+          console.log(userData)
+    
+          const response = await fetch('https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          });
+    
+          if (response.ok) {
+            console.log('Usuário cadastrado com sucesso!');
+            navigation.navigate(goToLogin);
+          } else {
+            console.error('Falha ao cadastrar usuário. Status:', response.status);
+          }
+        } catch (error) {
+          console.error('Erro ao cadastrar usuário:', error.message);
+        }
+      };
 
     return(
         <SafeAreaView style={styles.container}>
@@ -29,10 +64,11 @@ const RegisterScreen = () => {
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={name => onChangeName(name)}
+                onChangeText={nome => onChangeName(nome)}
                 placeholder= 'Nome'
-                value={name}
-            />            
+                value={nome}
+            /> 
+            {!nome && <Text style={{color: 'red'}}>O campo nome é obrigatório.</Text>}
             <Text style={styles.text}>Telefone</Text>
             <TextInput
                 style={styles.textInput}
@@ -41,10 +77,11 @@ const RegisterScreen = () => {
                 inputMode='tel'
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={cellphone => onChangeCellphone(cellphone)}
+                onChangeText={telefone => onChangeCellphone(telefone)}
                 placeholder= 'Telefone'
-                value={cellphone}
+                value={telefone}
             />
+            {!telefone && <Text style={{color: 'red'}}>O telefone é obrigatório.</Text>}
             <Text style={styles.text}>Email</Text>
             <TextInput 
                 style={styles.textInput}
@@ -55,8 +92,10 @@ const RegisterScreen = () => {
                 maxLength={40}
                 onChangeText={email => onChangeEmail(email)}
                 placeholder= 'Email'
+                require
                 value={email}
             />
+            {!email && <Text style={{color: 'red'}}>O campo email é obrigatório.</Text>}
             <Text style={styles.text}>Senha</Text>
             <TextInput
                 style={styles.textInput}
@@ -64,10 +103,11 @@ const RegisterScreen = () => {
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={password => onChangePassword(password)}
+                onChangeText={senha => onChangePassword(senha)}
                 placeholder= 'Senha'
-                value={password}
+                value={senha}
             />
+            {!senha && <Text style={{color: 'red'}}>O campo senha é obrigatório.</Text>}
             <Text style={styles.text}>Confirmar senha</Text>
             <TextInput 
                 style={styles.textInput}
@@ -75,11 +115,12 @@ const RegisterScreen = () => {
                 multiline
                 numberOfLines={1}
                 maxLength={40}
-                onChangeText={confirmPassword => onChangeConfirmPassword(confirmPassword)}
+                onChangeText={confirmaSenha => onChangeConfirmPassword(confirmaSenha)}
                 placeholder= 'Confirmar senha'
-                value={confirmPassword}
+                value={confirmaSenha}
             />
-            <TouchableOpacity style={styles.registerButton} onPress={goToLogin}>
+            {!confirmaSenha && <Text style={{color: 'red'}}>O campo confirmar senha é obrigatório.</Text>}
+            <TouchableOpacity style={styles.registerButton} onPress={cadastrarUsuario}>
                 <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
             <Text style={styles.loginButton} onPress={goToLogin}>Logar</Text>

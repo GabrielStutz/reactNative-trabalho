@@ -1,14 +1,27 @@
-import * as React from 'react';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext, AuthProvider } from './src/components/autenticacao/AuthContext';
 import NavigationMain from './src/components/navigation/NavigationMain';
-function Main() {
-  useEffect(() => {
-    loadFonts();
-  }, []);
-}
+import { useContext } from 'react/cjs/react.production.min';
+import { useNavigation } from '@react-navigation/native';
+
 function App() {
-    return(
-        <NavigationMain/>
-    );
+  useEffect(() => { 
+    const userAuth = useContext(AuthContext);
+    const navigate = useNavigation();
+    
+    if(!userAuth?.userToken) {
+      navigate('Login')
+    }
+  }, [])
+
+  return (
+    <NavigationContainer>
+      <AuthProvider>
+        <NavigationMain />
+      </AuthProvider>
+    </NavigationContainer>
+  );
 }
 
 export default App;
