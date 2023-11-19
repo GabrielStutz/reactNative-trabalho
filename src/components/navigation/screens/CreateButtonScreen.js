@@ -6,17 +6,22 @@ import { useNavigation } from "@react-navigation/native";
 export default function ButtonScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <Text style={textStyles.subtitulo} bottom={50}>
+        Juntos podemos mudar vidas
+      </Text>
+      <Text style={textStyles.subtitulo} bottom={50}>
+        Sua doação é o primeiro passo
+      </Text>
+      <Text style={textStyles.subtituloNeg} bottom={50}>
+        Vamos começar!
+      </Text>
+      <Text></Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("CreateImageScreen")}
-      >
+        onPress={() => navigation.navigate("Image")}
+    >
         <Text style={styles.buttonText}>Doar</Text>
       </TouchableOpacity>
-      <Text></Text>
-      <Text style={textStyles.subtituloNeg}>Juntos, podemos mudar vidas.</Text>
-      <Text style={textStyles.subtituloNeg}>
-        Sua doação é o primeiro passo. Vamos começar!
-      </Text>
     </View>
   );
 }

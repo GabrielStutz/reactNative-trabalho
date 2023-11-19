@@ -1,29 +1,17 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ClickableImage from "../../ClickableImage.js";
 import { useNavigation } from "@react-navigation/native";
 import { textStyles } from "../../Fonts.js";
 
-export default function CreateImageScreen({ navigation }) {
+export default function ImageScreen({ navigation }) {
   const [images, setImages] = React.useState([
     "https://i.postimg.cc/ZRDBd4z2/Upload.png",
     "https://i.postimg.cc/ZRDBd4z2/Upload.png",
     "https://i.postimg.cc/ZRDBd4z2/Upload.png",
     "https://i.postimg.cc/ZRDBd4z2/Upload.png",
   ]);
-
-  useEffect(() => {
-    (async () => {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert(
-          "Desculpe, precisamos de permissão para acessar a galeria de imagens."
-        );
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
@@ -48,6 +36,10 @@ export default function CreateImageScreen({ navigation }) {
     <View style={styles.view}>
       <GestureHandlerRootView>
         <View style={styles.imageContainer}>
+          <Text></Text>
+          <Text style={textStyles.subtituloNeg} bottom={30}>Escolha algumas fotos do seu produto.</Text>
+          <Text style={textStyles.subtituloNeg} bottom={20}>Clique sobre os quadrados</Text>
+          <Text></Text>
           <View style={styles.row}>
             <ClickableImage
               imageUri={images[0]}
@@ -69,13 +61,10 @@ export default function CreateImageScreen({ navigation }) {
             />
           </View>
           <Text></Text>
-          <Text style={textStyles.subtituloNeg}>
-            Vamos começar escolhendo algumas fotos da sua doação
-          </Text>
-          <Text style={textStyles.subtituloNeg}>Clique sobre os quadrados</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate("CreateDescScreen")}
+            disabled={images.every((image) => image === 'https://i.postimg.cc/ZRDBd4z2/Upload.png')}
+            onPress={() => navigation.navigate("Desc")}
           >
             <Text style={styles.buttonText}>Proximo</Text>
           </TouchableOpacity>
@@ -102,11 +91,23 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 200,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
   },
-});
+  button: {
+    marginTop: 20,
+    backgroundColor: 'white',
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+}
+);

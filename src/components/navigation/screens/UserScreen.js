@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { textStyles } from "../../Fonts";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
 
 const UserScreen = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     fetchUsers();
+    getImageFromParams();
   }, []);
 
+    // Função para obter dados do usuário
   const fetchUsers = () => {
-    fetch(
-      "https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user",
+    const url = `${obterUrlBase()}/api/user`;
+    fetch(url,
       {
         method: "GET",
         headers: {
-          Origin: "*",
-          Accept: "application/json",
+        Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
         },
       }
@@ -46,19 +48,40 @@ const UserScreen = ({ navigation }) => {
       });
   };
 
-  const FotoPerfilURL =
-    "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
-
-  const irParaInfo = () => {
-    navigation.navigate("Info");
+    // Função para obter imagem do parâmetro de rota
+  const getImageFromParams = () => {
+    const { selectedImage } = navigation.params || {};
+    if (selectedImage) {
+      setImage(selectedImage);
+    }
   };
+
+  // Função para navegar para a tela de informações pessoais
+  const irParaInfo = () => {
+    navigation.navigate("Info", {
+      defaultImage: image || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg",
+    });
+  };
+
+    // Função para navegar para a tela de doações
   const irParaDonate = () => {
     navigation.navigate("Donate");
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: FotoPerfilURL }} style={styles.avatarFoto} />
+        {image ? (
+          <Image
+            source={{ uri: `data:image/png;base64,${image}` }}
+            style={styles.avatarFoto}
+          />
+        ) : (
+          <Image
+            source={{ uri: "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg" }}
+            style={styles.avatarFoto}
+          />
+        )}
       </View>
       {userData && (
         <>

@@ -7,12 +7,11 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loginName } from "../TabNavigator";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator(); 
 
 const RegisterScreen = ({ navigation }) => {
   const [nome, onChangeName] = useState("");

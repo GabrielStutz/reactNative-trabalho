@@ -1,34 +1,36 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const textStyles = StyleSheet.create({
   titulo: {
-    fontFamily: 'Arial',
-    fontWeight:'bold',
+    textAlign: "center",
+    fontFamily: "Arial",
+    fontWeight: "bold",
     fontSize: 30,
-    color: '#fff',
+    color: "#fff",
   },
   subtitulo: {
-    fontFamily: 'Arial',
+    fontFamily: "Arial",
     fontSize: 25,
-    color: '#fff',
+    color: "#fff",
   },
   subtituloNeg: {
-    textAlign: 'center',
-    fontFamily: 'Arial',
-    fontWeight:'bold',
+    textAlign: "center",
+    fontFamily: "Arial",
+    fontWeight: "bold",
     fontSize: 25,
-    color: '#fff',
+    color: "#fff",
   },
   paragrafo: {
-    textAlign:'center',
-    fontFamily: 'Arial', 
+    textAlign: "center",
+    fontFamily: "Arial",
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
   paragrafoNeg: {
-    fontFamily: 'Arial',
-    fontWeight:'bold',
+    textAlign: "center",
+    fontFamily: "Arial",
+    fontWeight: "bold",
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
 });
