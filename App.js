@@ -1,26 +1,43 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthContext, AuthProvider } from './src/components/autenticacao/AuthContext';
-import NavigationMain from './src/components/navigation/NavigationMain';
-import { useContext } from 'react/cjs/react.production.min';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import {
+  AuthContext,
+  AuthProvider,
+} from "./src/components/autenticacao/AuthContext";
+import NavigationMain from "./src/components/navigation/NavigationMain";
+import { useNavigation } from "@react-navigation/native";
+import TabNavigator from "./src/components/navigation/TabNavigator";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  DetailsScreen,
+  DonateScreen,
+} from "./src/components/navigation/screens/DonateScreen";
+
+const Stack = createNativeStackNavigator();
 
 function App() {
-  useEffect(() => { 
-    const userAuth = useContext(AuthContext);
-    const navigate = useNavigation();
-    
-    if(!userAuth?.userToken) {
-      navigate('Login')
-    }
-  }, [])
-
   return (
-    <NavigationContainer>
-      <AuthProvider>
-        <NavigationMain />
-      </AuthProvider>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Tab"
+            component={TabNavigator}
+            options={{ animation: "default" }}
+          />
+          <Stack.Screen
+            name="Doações"
+            component={DonateScreen}
+            options={{ animation: "default" }}
+          />
+          <Stack.Screen
+            name="Details"
+            component={DetailsScreen}
+            options={{ animation: "default" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 

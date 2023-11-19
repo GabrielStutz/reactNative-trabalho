@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { textStyles } from '../../Fonts';
+import { textStyles } from "../../Fonts";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
 
-const UserScreen = () => {
-  const navigation = useNavigation();
+const UserScreen = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -15,48 +14,51 @@ const UserScreen = () => {
   }, []);
 
   const fetchUsers = () => {
-    fetch('https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user', {
-      method: 'GET',
-      headers: {
-        Origin: '*',
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
+    fetch(
+      "https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user",
+      {
+        method: "GET",
+        headers: {
+          Origin: "*",
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
       }
-    })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro na solicitação: ${res.status} - ${res.statusText}`);
-      }
-      return res.json();
-    })
-    .then(data => {
-      console.log('Dados do usuário recebidos:', data);
-      if (Array.isArray(data) && data.length > 0) {
-        setUserData(data[0]);
-      } else {
-        console.error('Formato de dados inválido ou array vazia');
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao obter dados do usuário:', error.message);
-    });
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            `Erro na solicitação: ${res.status} - ${res.statusText}`
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dados do usuário recebidos:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setUserData(data[0]);
+        } else {
+          console.error("Formato de dados inválido ou array vazia");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados do usuário:", error.message);
+      });
   };
 
-  const FotoPerfilURL = 'https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg';
+  const FotoPerfilURL =
+    "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg";
 
   const irParaInfo = () => {
-    navigation.navigate('Info');
+    navigation.navigate("Info");
   };
   const irParaDonate = () => {
-    navigation.navigate('Donate');
+    navigation.navigate("Donate");
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: FotoPerfilURL }}
-          style={styles.avatarFoto}
-        />
+        <Image source={{ uri: FotoPerfilURL }} style={styles.avatarFoto} />
       </View>
       {userData && (
         <>
@@ -80,18 +82,18 @@ const UserScreen = () => {
       <View style={styles.Divisoria} />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#a24fb0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#a24fb0",
+    alignItems: "center",
+    justifyContent: "center",
   },
   imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: "flex-start",
     marginTop: -100,
   },
   avatarFoto: {
@@ -101,19 +103,19 @@ const styles = StyleSheet.create({
   },
   Divisoria: {
     height: 2,
-    backgroundColor: 'white',
-    width: '80%',
+    backgroundColor: "white",
+    width: "80%",
     marginTop: 20,
     marginBottom: 20,
   },
   containerInf: {
-    flexDirection: 'row',
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
   },
   containerDoa: {
-    flexDirection: 'row',
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
   },
   image: {

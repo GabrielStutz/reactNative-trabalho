@@ -1,19 +1,23 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'; // Importe o componente Image aqui
-import { createStackNavigator } from '@react-navigation/stack';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"; // Importe o componente Image aqui
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-const locations = [{
-    title: 'Jaqueta doação',
-    description: 'Uma bela jaqueta de mulher',
-    image: require('../../../../assets/Jaqueta.jpg') // Substitua pelo URL da imagem real.
-  }
+const locations = [
+  {
+    title: "Jaqueta doação",
+    description: "Uma bela jaqueta de mulher",
+    image: require("../../../../assets/Jaqueta.jpg"), // Substitua pelo URL da imagem real.
+  },
 ];
 
-const LocationCard = ({ location, navigation }) => (
+const LocationCard = ({ location, navigation }) => {
+  return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate('Details', { location })}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Details", { location })}
+      >
         <Text style={styles.locationText}>{location.title}</Text>
       </TouchableOpacity>
       {location.image && (
@@ -22,87 +26,116 @@ const LocationCard = ({ location, navigation }) => (
       <Text style={styles.locationDescription}>{location.description}</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {/* código para compartilhar */}}
+        onPress={() => {
+          /* código para compartilhar */
+        }}
       >
         <Text style={styles.buttonText}>Compartilhar</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {/* código para pegar a rota */}}
+        onPress={() => {
+          /* código para pegar a rota */
+        }}
       >
         <Text style={styles.buttonText}>Pegar a rota</Text>
       </TouchableOpacity>
     </View>
   );
+};
 
-const DonateScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <TouchableOpacity
-      style={styles.backButton}
-      onPress={() => navigation.navigate('User')}
-    >
-      <Text style={styles.backButtonText}>ᐊ</Text>
-    </TouchableOpacity>
-    <Text style={styles.title}>Minhas doações</Text>
-    {locations.map((location, index) => (
-      <LocationCard key={index} location={location} navigation={navigation} />
-    ))}
-  </View>
-);
+export const DonateScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate("User")}
+      >
+        <Text style={styles.backButtonText}>ᐊ</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>Minhas doações</Text>
+      {locations.map((location, index) => (
+        <LocationCard key={index} location={location} navigation={navigation} />
+      ))}
+    </View>
+  );
+};
 
-const DetailsScreen = ({ route }) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{route.params.location.title}</Text>
-    {route.params.location.image && (
-      <Image source={route.params.location.image} style={styles.locationImage} />
-    )}
-    <Text style={styles.locationDescription}>{route.params.location.description}</Text>
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {/* código para compartilhar */}}
-    >
-      <Text style={styles.buttonText}>Compartilhar</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => {/* código para pegar a rota */}}
-    >
-      <Text style={styles.buttonText}>Pegar a rota</Text>
-    </TouchableOpacity>
-  </View>
-);
+export const DetailsScreen = ({ route }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{route.params.location.title}</Text>
+      {route.params.location.image && (
+        <Image
+          source={route.params.location.image}
+          style={styles.locationImage}
+        />
+      )}
+      <Text style={styles.locationDescription}>
+        {route.params.location.description}
+      </Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          /* código para compartilhar */
+        }}
+      >
+        <Text style={styles.buttonText}>Compartilhar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          /* código para pegar a rota */
+        }}
+      >
+        <Text style={styles.buttonText}>Pegar a rota</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-const App = () => (
-  <Stack.Navigator initialRouteName="Donate"
-       screenOptions={{
-       headerStyle: { backgroundColor: '#a24fb0' },
-       headerShadowVisible: false, 
-       headerTintColor: 'white'}}>
-    <Stack.Screen name="Doações" component={DonateScreen} />
-    <Stack.Screen name="Details" component={DetailsScreen} />
+const App = ({ navigation }) => (
+  <Stack.Navigator
+    initialRouteName="Donate"
+    screenOptions={{
+      headerStyle: { backgroundColor: "#a24fb0" },
+      headerShadowVisible: false,
+      headerTintColor: "white",
+    }}
+  >
+    <Stack.Screen
+      name="Doações"
+      component={DonateScreen}
+      navigation={navigation}
+    />
+    <Stack.Screen
+      name="Details"
+      component={DetailsScreen}
+      navigation={navigation}
+    />
   </Stack.Navigator>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#a24fb0',
+    backgroundColor: "#a24fb0",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    color: 'white',
+    color: "white",
     marginBottom: 20,
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     marginBottom: 20,
     borderRadius: 10,
   },
   locationText: {
     fontSize: 18,
-    color: 'purple',
+    color: "purple",
     marginBottom: 10,
   },
   locationImage: {
@@ -112,43 +145,43 @@ const styles = StyleSheet.create({
   },
   locationDescription: {
     fontSize: 16,
-    color: 'black',
+    color: "black",
     marginBottom: 10,
   },
   button: {
-    backgroundColor: 'purple',
+    backgroundColor: "purple",
     padding: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 5,
   },
   buttonText: {
     fontSize: 16,
-    color: 'white',
+    color: "white",
   },
   backButton: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   backButtonText: {
     fontSize: 24,
-    color: 'white',
+    color: "white",
   },
   locationTitle: {
     fontSize: 18,
-    color: 'ss',
-    fontWeight: 'bold', // Deixa o título em negrito
+    color: "ss",
+    fontWeight: "bold", // Deixa o título em negrito
     marginBottom: 10,
   },
   locationDescription: {
     fontSize: 16,
-    color: 'black',
+    color: "black",
     marginBottom: 10,
   },
   locationDescriptionWhite: {
     fontSize: 16,
-    color: 'white', // Muda a cor do texto para branco
+    color: "white", // Muda a cor do texto para branco
     marginBottom: 10,
   },
 });
 
-    export default App;
+export default App;

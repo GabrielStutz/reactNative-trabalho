@@ -1,35 +1,37 @@
-import  React, { useEffect } from "react";
-import { StyleSheet, View,Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ClickableImage from "../../ClickableImage.js";
 import { useNavigation } from "@react-navigation/native";
 import { textStyles } from "../../Fonts.js";
 
-
-export default function CreateImageScreen() {
+export default function CreateImageScreen({ navigation }) {
   const [images, setImages] = React.useState([
-    'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-    'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-    'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-    'https://i.postimg.cc/ZRDBd4z2/Upload.png',
+    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
   ]);
+
   useEffect(() => {
     (async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Desculpe, precisamos de permissão para acessar a galeria de imagens.');
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        alert(
+          "Desculpe, precisamos de permissão para acessar a galeria de imagens."
+        );
       }
     })();
   }, []);
-  const navigation = useNavigation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
       setImages([
-        'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-        'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-        'https://i.postimg.cc/ZRDBd4z2/Upload.png',
-        'https://i.postimg.cc/ZRDBd4z2/Upload.png',
+        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
+        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
       ]);
     });
 
@@ -67,14 +69,16 @@ export default function CreateImageScreen() {
             />
           </View>
           <Text></Text>
-          <Text style={textStyles.subtituloNeg}>Vamos começar escolhendo algumas fotos da sua doação</Text>
+          <Text style={textStyles.subtituloNeg}>
+            Vamos começar escolhendo algumas fotos da sua doação
+          </Text>
           <Text style={textStyles.subtituloNeg}>Clique sobre os quadrados</Text>
           <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("CreateDescScreen")}
-      >
-        <Text style={styles.buttonText}>Proximo</Text>
-      </TouchableOpacity>
+            style={styles.button}
+            onPress={() => navigation.navigate("CreateDescScreen")}
+          >
+            <Text style={styles.buttonText}>Proximo</Text>
+          </TouchableOpacity>
         </View>
       </GestureHandlerRootView>
     </View>
@@ -83,7 +87,7 @@ export default function CreateImageScreen() {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: '#a24fb0',
+    backgroundColor: "#a24fb0",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

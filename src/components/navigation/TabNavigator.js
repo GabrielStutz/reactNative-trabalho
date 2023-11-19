@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import { Text } from "react-native";
 
 // Screens
@@ -14,6 +13,7 @@ import DonateScreen from "./screens/DonateScreen";
 import CreateImageScreen from "./screens/CreateImageScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import { AuthContext } from "../autenticacao/AuthContext";
 
 //Screen names
 const homeName = "Home";
@@ -22,33 +22,20 @@ const userName = "User";
 const donateName = "Donate";
 const infoName = "Info";
 const registerName = "Register";
-const loginName = "Login";
+export const loginName = "Login";
 
 const Tab = createBottomTabNavigator();
 
-function MainContainer({ navigation }) {
+function TabNavigator({ navigation }) {
   const [tokenChecked, setTokenChecked] = useState(false);
+  const userAuth = useContext(AuthContext);
 
   useEffect(() => {
-    const checkToken = async () => {
-      try {
-        await AsyncStorage.removeItem("userToken");
-        const token = await AsyncStorage.getItem("userToken");
-        console.log(token);
+    console.log("fodase fodase fodase", userAuth.userToken);
 
-        if (token) {
-          setTokenChecked(true);
-          navigation.navigate("Home");
-        } else {
-          setTokenChecked(true);
-          navigation.navigate(loginName);
-        }
-      } catch (error) {
-        console.error("Erro ao verificar o token:", error.message);
-      }
-    };
-
-    checkToken();
+    if (!userAuth.userToken) {
+      navigation.navigate(loginName);
+    }
   }, [navigation]);
 
   return (
@@ -104,6 +91,7 @@ function MainContainer({ navigation }) {
         component={InfoScreen}
         options={{ tabBarItemStyle: { display: "none" } }}
       />
+
       <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={createName} component={CreateButtonScreen} />
       <Tab.Screen name={userName} component={UserScreen} />
@@ -111,4 +99,4 @@ function MainContainer({ navigation }) {
   );
 }
 
-export default MainContainer;
+export default TabNavigator;
