@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"; // Importe o componente Image aqui
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"; 
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
@@ -8,7 +8,7 @@ const locations = [
   {
     title: "Jaqueta doação",
     description: "Uma bela jaqueta de mulher",
-    image: require("../../../../assets/Jaqueta.jpg"), // Substitua pelo URL da imagem real.
+    image: require("../../../../assets/Jaqueta.jpg"),
   },
 ];
 
@@ -27,7 +27,7 @@ const LocationCard = ({ location, navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          /* código para compartilhar */
+        
         }}
       >
         <Text style={styles.buttonText}>Compartilhar</Text>
@@ -35,7 +35,6 @@ const LocationCard = ({ location, navigation }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          /* código para pegar a rota */
         }}
       >
         <Text style={styles.buttonText}>Pegar a rota</Text>
@@ -77,7 +76,6 @@ export const DetailsScreen = ({ route }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          /* código para compartilhar */
         }}
       >
         <Text style={styles.buttonText}>Compartilhar</Text>
@@ -85,7 +83,6 @@ export const DetailsScreen = ({ route }) => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          /* código para pegar a rota */
         }}
       >
         <Text style={styles.buttonText}>Pegar a rota</Text>
@@ -139,9 +136,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   locationImage: {
-    width: 200, // Defina o tamanho da imagem conforme necessário
-    height: 200, // Defina o tamanho da imagem conforme necessário
-    borderRadius: 10, // Para criar uma imagem circular, ajuste o valor conforme necessário
+    width: 200, 
+    height: 200,
+    borderRadius: 10,
   },
   locationDescription: {
     fontSize: 16,
@@ -169,7 +166,7 @@ const styles = StyleSheet.create({
   locationTitle: {
     fontSize: 18,
     color: "ss",
-    fontWeight: "bold", // Deixa o título em negrito
+    fontWeight: "bold", 
     marginBottom: 10,
   },
   locationDescription: {
@@ -179,7 +176,7 @@ const styles = StyleSheet.create({
   },
   locationDescriptionWhite: {
     fontSize: 16,
-    color: "white", // Muda a cor do texto para branco
+    color: "white",
     marginBottom: 10,
   },
 });

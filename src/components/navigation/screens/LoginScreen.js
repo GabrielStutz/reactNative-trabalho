@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthContext } from "../../autenticacao/AuthContext";
+import { AuthContext, obterUrlBase } from "../../autenticacao/AuthContext";
 
 const Stack = createStackNavigator();
 
@@ -28,9 +28,8 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log(email);
       console.log(senha);
-      const url = `https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/autenticacao/login?email=${encodeURIComponent(
-        email
-      )}&senha=${encodeURIComponent(senha)}`;
+      console.log(obterUrlBase())
+      const url = `${obterUrlBase()}/autenticacao/login?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
       const response = await fetch(url, {
         method: "POST",
       });

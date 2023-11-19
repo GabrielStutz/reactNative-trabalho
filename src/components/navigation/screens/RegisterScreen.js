@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loginName } from "../TabNavigator";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
 
 const Stack = createStackNavigator();
 
@@ -36,8 +37,8 @@ const RegisterScreen = ({ navigation }) => {
 
       console.log(userData);
 
-      const response = await fetch(
-        "https://83a5-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user",
+      const url = `${obterUrlBase()}/api/user`
+      const response = await fetch(url,
         {
           method: "POST",
           headers: {
