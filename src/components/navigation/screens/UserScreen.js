@@ -1,62 +1,88 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { textStyles } from '../../Fonts';
+import { textStyles } from "../../Fonts";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
 
-const UserScreen = () => {
+const UserScreen = ({ route }) => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+    getImageFromParams();
+  }, [route]);
 
+    // Função para obter dados do usuário
   const fetchUsers = () => {
-    fetch('https://dcf3-2804-1b0-1903-81d4-3858-2faa-334c-7ffd.ngrok-free.app/api/user', {
-      method: 'GET',
-      headers: {
-        Origin: '*',
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
+    fetch(
+      "https://acdd-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
       }
-    })
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Erro na solicitação: ${res.status} - ${res.statusText}`);
-      }
-      return res.json();
-    })
-    .then(data => {
-      console.log('Dados do usuário recebidos:', data);
-      if (Array.isArray(data) && data.length > 0) {
-        setUserData(data[0]);
-      } else {
-        console.error('Formato de dados inválido ou array vazia');
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao obter dados do usuário:', error.message);
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            `Erro na solicitação: ${res.status} - ${res.statusText}`
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dados do usuário recebidos:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setUserData(data[0]);
+        } else {
+          console.error("Formato de dados inválido ou array vazia");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados do usuário:", error.message);
+      });
+  };
+
+    // Função para obter imagem do parâmetro de rota
+  const getImageFromParams = () => {
+    const { selectedImage } = route.params || {};
+    if (selectedImage) {
+      setImage(selectedImage);
+    }
+  };
+
+  // Função para navegar para a tela de informações pessoais
+  const irParaInfo = () => {
+    navigation.navigate("Info", {
+      defaultImage: image || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg",
     });
   };
 
-  const FotoPerfilURL = 'https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg';
-
-  const irParaInfo = () => {
-    navigation.navigate('Info');
-  };
+    // Função para navegar para a tela de doações
   const irParaDonate = () => {
-    navigation.navigate('Donate');
+    navigation.navigate("Donate");
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image
-          source={{ uri: FotoPerfilURL }}
-          style={styles.avatarFoto}
-        />
+        {image ? (
+          <Image
+            source={{ uri: `data:image/png;base64,${image}` }}
+            style={styles.avatarFoto}
+          />
+        ) : (
+          <Image
+            source={{ uri: "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg" }}
+            style={styles.avatarFoto}
+          />
+        )}
       </View>
       {userData && (
         <>
@@ -80,18 +106,18 @@ const UserScreen = () => {
       <View style={styles.Divisoria} />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#a24fb0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#a24fb0",
+    alignItems: "center",
+    justifyContent: "center",
   },
   imageContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: "flex-start",
     marginTop: -100,
   },
   avatarFoto: {
@@ -101,19 +127,19 @@ const styles = StyleSheet.create({
   },
   Divisoria: {
     height: 2,
-    backgroundColor: 'white',
-    width: '80%',
+    backgroundColor: "white",
+    width: "80%",
     marginTop: 20,
     marginBottom: 20,
   },
   containerInf: {
-    flexDirection: 'row',
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
   },
   containerDoa: {
-    flexDirection: 'row',
-    alignItems: 'center', 
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
   },
   image: {

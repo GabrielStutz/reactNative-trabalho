@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
 
 export default function HomeScreen() {
 
@@ -8,7 +8,6 @@ export default function HomeScreen() {
       }, []);    
     const fetchUsers =  () => {
         fetch('https://dcf3-2804-1b0-1903-81d4-3858-2faa-334c-7ffd.ngrok-free.app/api/user', { method: 'GET', headers: {
-        Origin: '*',
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8",
         } })

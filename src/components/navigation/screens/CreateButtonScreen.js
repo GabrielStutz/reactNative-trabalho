@@ -5,35 +5,42 @@ import { textStyles } from "../../Fonts";
 export default function ButtonScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <Text style={textStyles.subtitulo} bottom={50}>
+        Juntos podemos mudar vidas
+      </Text>
+      <Text style={textStyles.subtitulo} bottom={50}>
+        Sua doação é o primeiro passo
+      </Text>
+      <Text style={textStyles.subtituloNeg} bottom={50}>
+        Vamos começar!
+      </Text>
+      <Text></Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("CreateImageScreen")}
+        onPress={() => navigation.navigate("Image")}
       >
         <Text style={styles.buttonText}>Doar</Text>
       </TouchableOpacity>
-      <Text></Text>
-      <Text style={textStyles.subtituloNeg}>Juntos, podemos mudar vidas.</Text>
-    <Text style={textStyles.subtituloNeg}>Sua doação é o primeiro passo. Vamos começar!</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#a24fb0',
+    backgroundColor: "#a24fb0",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingVertical: 20,
     paddingHorizontal: 60,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'black',
+    color: "black",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
