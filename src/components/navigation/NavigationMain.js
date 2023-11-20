@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import { Text } from "react-native";
 
 // Screens
 import HomeScreen from "./screens/HomeScreen";
 import CreateButtonScreen from "./screens/CreateButtonScreen";
-import CreateImageScreen from './screens/CreateImageScreen';
-import CreateDescScreen from './screens/CreateDescScreen';
+import CreateImageScreen from "./screens/CreateImageScreen";
+import CreateDescScreen from "./screens/CreateDescScreen";
 import UserScreen from "./screens/UserScreen";
 import InfoScreen from "./screens/InfoScreen";
 import DonateScreen from "./screens/DonateScreen";
@@ -58,12 +57,6 @@ function MainContainer({ navigation }) {
     <Tab.Navigator
       initialRouteName={loginName}
       screenOptions={({ route }) => ({
-        // tabBarStyle: {
-        //   activeTintColor: 'purple',
-        //   inactiveTintColor: '#050038',
-        //   labelStyle: { paddingBottom: 10, fontSize: 10 },
-        //   style: { padding: 10, height: 70 },
-        // },
         headerShown: false,
         tabBarIcon: ({ focused, size }) => {
           let iconName;

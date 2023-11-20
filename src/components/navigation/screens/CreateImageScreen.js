@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ClickableImage from "../../ClickableImage.js";
-import { useNavigation } from "@react-navigation/native";
 import { textStyles } from "../../Fonts.js";
 
 export default function ImageScreen({ navigation }) {
@@ -60,7 +59,6 @@ export default function ImageScreen({ navigation }) {
               onChangeImage={(uri) => handleImageChange(uri, 3)}
             />
           </View>
-          <Text></Text>
           <TouchableOpacity
             style={styles.button}
             disabled={images.every((image) => image === 'https://i.postimg.cc/ZRDBd4z2/Upload.png')}

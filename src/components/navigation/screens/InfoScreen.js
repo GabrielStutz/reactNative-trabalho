@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../Fonts";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Info = () => {
   const FotoPerfilURL =
@@ -28,9 +29,18 @@ const Info = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const url = `${obterUrlBase()}/api/user`
+        const token = await AsyncStorage.getItem('userToken');
+        console.log(token)
+        const url = `${obterUrlBase()}/autenticacao/authenticated`
         const response = await fetch(
-          url
+          url, {
+            method: "GET",
+            headers: {
+            Accept: "application/json",
+              "Content-Type": "application/json;charset=UTF-8",
+              "Authorization": `Bearer ${token}` 
+            },
+          }
         );
         if (!response.ok) {
           throw new Error(
@@ -38,9 +48,7 @@ const Info = () => {
           );
         }
         const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setUserData(data[0]);
-        }
+        setUserData(data);
       } catch (error) {
         console.error("Erro ao obter dados do usuário:", error.message);
       }

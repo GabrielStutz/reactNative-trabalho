@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { textStyles } from "../../Fonts";
-import { useNavigation } from "@react-navigation/native";
 
 export default function ButtonScreen({ navigation }) {
   return (

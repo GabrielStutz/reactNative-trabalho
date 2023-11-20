@@ -5,6 +5,7 @@ import { textStyles } from "../../Fonts";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserScreen = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
@@ -17,13 +18,15 @@ const UserScreen = ({ navigation }) => {
 
     // Função para obter dados do usuário
   const fetchUsers = () => {
-    const url = `${obterUrlBase()}/api/user`;
+    const token = AsyncStorage.getItem('userToken');
+    const url = `${obterUrlBase()}/autenticacao/authenticated`;
     fetch(url,
       {
         method: "GET",
         headers: {
         Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
+          "Authorization": `Bearer ${token}` 
         },
       }
     )

@@ -11,6 +11,7 @@ import UserScreen from "./screens/UserScreen";
 import InfoScreen from "./screens/InfoScreen";
 import DonateScreen from "./screens/DonateScreen";
 import CreateImageScreen from "./screens/CreateImageScreen";
+import CreateDescScreen from "./screens/CreateDescScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import { AuthContext } from "../autenticacao/AuthContext";
@@ -19,6 +20,8 @@ import { AuthContext } from "../autenticacao/AuthContext";
 const homeName = "Home";
 const createName = "Create";
 const userName = "User";
+const imageName = "Image";
+const descName = "Desc";
 const donateName = "Donate";
 const infoName = "Info";
 const registerName = "Register";
@@ -91,7 +94,16 @@ function TabNavigator({ navigation }) {
         component={InfoScreen}
         options={{ tabBarItemStyle: { display: "none" } }}
       />
-
+      <Tab.Screen
+        name={descName}
+        component={CreateDescScreen}
+        options={{ tabBarItemStyle: { display: 'none' } }}
+      />
+      <Tab.Screen
+        name={imageName}
+        component={CreateImageScreen}
+        options={{ tabBarItemStyle: { display: 'none' } }}
+      />
       <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={createName} component={CreateButtonScreen} />
       <Tab.Screen name={userName} component={UserScreen} />
