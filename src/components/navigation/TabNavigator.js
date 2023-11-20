@@ -107,6 +107,8 @@ function TabNavigator({ navigation }) {
       <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={createName} component={CreateButtonScreen} />
       <Tab.Screen name={userName} component={UserScreen} />
+      <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' }, }}
+      />
     </Tab.Navigator>
   );
 }

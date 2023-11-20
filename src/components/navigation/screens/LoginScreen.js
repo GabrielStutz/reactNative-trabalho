@@ -40,6 +40,7 @@ const LoginScreen = ({ navigation }) => {
 
         console.log(token);
         await AsyncStorage.setItem("userToken", token);
+        await AsyncStorage.setItem("userId", user.id.toString());
         navigation.navigate("Home");
       } else {
         console.error("Credenciais inválidas. Status:", response.status);

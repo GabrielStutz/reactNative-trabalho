@@ -1,34 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ClickableImage from "../../ClickableImage.js";
 import { textStyles } from "../../Fonts.js";
 
 export default function ImageScreen({ navigation }) {
-  const [images, setImages] = React.useState([
-    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-    "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-  ]);
+  const [image, setImage] = useState("https://i.postimg.cc/ZRDBd4z2/Upload.png");
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      setImages([
-        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-        "https://i.postimg.cc/ZRDBd4z2/Upload.png",
-      ]);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  const handleImageChange = (uri, index) => {
-    const updatedImages = [...images];
-    updatedImages[index] = uri;
-    setImages(updatedImages);
+  const handleImageChange = (uri) => {
+    setImage(uri);
   };
 
   return (
@@ -36,32 +16,16 @@ export default function ImageScreen({ navigation }) {
       <GestureHandlerRootView>
         <View style={styles.imageContainer}>
           <Text></Text>
-          <Text style={textStyles.subtituloNeg} bottom={30}>Escolha algumas fotos do seu produto.</Text>
-          <Text style={textStyles.subtituloNeg} bottom={20}>Clique sobre os quadrados</Text>
+          <Text style={textStyles.subtituloNeg} bottom={30}>Escolha uma foto do seu produto.</Text>
+          <Text style={textStyles.subtituloNeg} bottom={20}>Clique sobre o quadrado</Text>
           <Text></Text>
-          <View style={styles.row}>
-            <ClickableImage
-              imageUri={images[0]}
-              onChangeImage={(uri) => handleImageChange(uri, 0)}
-            />
-            <ClickableImage
-              imageUri={images[1]}
-              onChangeImage={(uri) => handleImageChange(uri, 1)}
-            />
-          </View>
-          <View style={styles.row}>
-            <ClickableImage
-              imageUri={images[2]}
-              onChangeImage={(uri) => handleImageChange(uri, 2)}
-            />
-            <ClickableImage
-              imageUri={images[3]}
-              onChangeImage={(uri) => handleImageChange(uri, 3)}
-            />
-          </View>
+          <ClickableImage
+            imageUri={image}
+            onChangeImage={(uri) => handleImageChange(uri)}
+          />
           <TouchableOpacity
             style={styles.button}
-            disabled={images.every((image) => image === 'https://i.postimg.cc/ZRDBd4z2/Upload.png')}
+            disabled={image === 'https://i.postimg.cc/ZRDBd4z2/Upload.png'}
             onPress={() => navigation.navigate("Desc")}
           >
             <Text style={styles.buttonText}>Proximo</Text>
@@ -90,11 +54,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-  },
   button: {
     marginTop: 20,
     backgroundColor: 'white',
@@ -107,5 +66,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-}
-);
+});
