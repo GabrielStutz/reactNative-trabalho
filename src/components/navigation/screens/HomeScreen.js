@@ -6,6 +6,17 @@ import { loginName } from "../TabNavigator";
 export default function HomeScreen({ navigation }) {
   const userAuth = useContext(AuthContext);
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+
+    if (!userAuth.userToken) {
+      navigation.navigate(loginName);
+    }
+  }, []);
+
   const fetchUsers = () => {
     fetch(
       "https://dcf3-2804-1b0-1903-81d4-3858-2faa-334c-7ffd.ngrok-free.app/api/user",

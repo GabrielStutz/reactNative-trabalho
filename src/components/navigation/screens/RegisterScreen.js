@@ -19,6 +19,7 @@ const RegisterScreen = ({ navigation }) => {
   const [email, onChangeEmail] = useState("");
   const [senha, onChangePassword] = useState("");
   const [confirmaSenha, onChangeConfirmPassword] = useState("");
+  const [file, setFile] = useState("");
 
   const cadastrarUsuario = async () => {
     try {
@@ -32,6 +33,7 @@ const RegisterScreen = ({ navigation }) => {
         email,
         senha,
         telefone,
+        file,
       };
 
       console.log(userData);
@@ -140,11 +142,12 @@ const RegisterScreen = ({ navigation }) => {
           O campo confirmar senha é obrigatório.
         </Text>
       )}
-      <TouchableOpacity>
-      <Text style={styles.buttonText}>Cadastrar</Text>  
-        style={styles.registerButton}
-        onPress={cadastrarUsuario}
-      </TouchableOpacity>
+      <TouchableOpacity
+  style={styles.registerButton}
+  onPress={cadastrarUsuario}
+>
+  <Text style={styles.buttonText}>Cadastrar</Text>
+</TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -190,12 +193,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#FFFFFF",
-  },
-  loginButton: {
-    color: "#1bd39d",
-    textAlign: "center",
-    marginTop: 10,
-    fontSize: 15,
   },
 });
 
