@@ -1,23 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { textStyles } from "../../Fonts";
-import { obterUrlBase } from "../../autenticacao/AuthContext";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const UserScreen = ({ navigation }) => {
+const UserScreen = ({ route }) => {
+  const navigation = useNavigation();
   const [userData, setUserData] = useState(null);
   const [image, setImage] = useState(null);
 
   useEffect(() => {
+    fetchUsers();
     getImageFromParams();
-  }, []);
+  }, [route]);
+
+    // Função para obter dados do usuário
+  const fetchUsers = () => {
+    fetch(
+      "https://acdd-2804-41b0-ffff-a2a1-2117-e877-205-2b42.ngrok-free.app/api/user",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            `Erro na solicitação: ${res.status} - ${res.statusText}`
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Dados do usuário recebidos:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setUserData(data[0]);
+        } else {
+          console.error("Formato de dados inválido ou array vazia");
+        }
+      })
+      .catch((error) => {
+        console.error("Erro ao obter dados do usuário:", error.message);
+      });
+  };
 
     // Função para obter imagem do parâmetro de rota
   const getImageFromParams = () => {
-    const { selectedImage } = navigation.params || {};
+    const { selectedImage } = route.params || {};
     if (selectedImage) {
       setImage(selectedImage);
     }

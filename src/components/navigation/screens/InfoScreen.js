@@ -57,7 +57,7 @@ const Info = () => {
   }, []);
 
   const VoltaUser = () => {
-    navigation.navigate("User");
+    navigation.navigate("User")
   };
 
     // Função para lidar com a escolha da imagem da galeria
