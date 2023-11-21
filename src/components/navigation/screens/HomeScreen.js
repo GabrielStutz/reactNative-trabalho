@@ -1,7 +1,8 @@
-import React, { useEffect, useContext } from "react";
-import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
+import React, { useEffect, useContext, useState } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Image, FlatList } from "react-native";
 import { AuthContext } from "../../autenticacao/AuthContext";
 import { loginName } from "../TabNavigator";
+import { imagensDoacoes } from "../../../../assets/cadeira_zeus.jpg";
 
 export default function HomeScreen({ navigation }) {
   const userAuth = useContext(AuthContext);
@@ -11,7 +12,6 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    console.log("fodase fodase fodase", userAuth.userToken);
 
     if (!userAuth.userToken) {
       navigation.navigate(loginName);
@@ -35,80 +35,135 @@ export default function HomeScreen({ navigation }) {
       .catch((error) => console.log(error));
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.homeDonation}>
-        <View style={styles.homeDonationName}>
-          <Image
-            source={require("../../../../assets/imagem_perfil_mickey.webp")}
-            style={styles.logoImage}
-          />
-          <Text style={styles.text}>Mickey Mouse</Text>
+const [donations, setDonations] = useState([
+    {
+        id: 1,
+        nomeDoacao: 'Cadeira de Rodas',
+        descricaoDoacao: 'Uma cadeira de rodas em bom estado',
+        imagemDoacao: imagensDoacoes,
+        usuario: {
+            idUser: 1,
+            nome: 'Maria Silva',
+            imagem: '../../../../assets/imagem_perfil_mickey.webp',
+        },
+    },
+    {
+        id: 2,
+        nomeDoacao: 'Roupas de Inverno',
+        descricaoDoacao: 'Conjunto de roupas quentes para adultos e crianças',
+        imagemDoacao: imagensDoacoes,
+        usuario: {
+            idUser: 2,
+            nome: 'João Oliveira',
+            imagem: '../../../../assets/imagem_perfil_mickey.webp',
+        },
+    },
+])
+
+/*
+function Home() {
+    return(
+        <View style={styles.homeDonation}>
+            <View style={styles.homeDonationName}>
+                <Image
+                    source={homeList.imagemDoacao}
+                    style={styles.logoImage}
+                />
+                <Text style={styles.text}>{homeList.usuario.nome}</Text>
+            </View>
+            <View style={styles.homeDonationImage}>
+                <Image
+                    source={homeList.imagemDoacao}
+                    style={styles.homeDonationImage}
+                />
+            </View>
+            <View style={styles.homeDonationDescription}>
+                <Text style={styles.donationDescriptionTitle}>
+                    {homeList.nomeDoacao}
+                </Text>
+                <Text style={styles.donationDescription}>
+                    {homeList.descricaoDoacao}
+                </Text>
+            </View>
         </View>
-        <View style={styles.homeDonationImage}>
-          <Image
-            source={require("../../../../assets/cadeira_zeus.jpg")}
-            style={styles.homeDonationImage}
-          ></Image>
-        </View>
-        <View style={styles.homeDonationDescription}>
-          <Text style={styles.donationDescriptionTitle}>
-            Cadeira Olympians Zeus
-          </Text>
-          <Text style={styles.donationDescription}>
-            Tamanho = {"\n"}
-            Altura: 126-136 cm {"\n"}
-            Largura: 67-70 cm {"\n"}
-            Profundidade: 67 cm {"\n"}
-            Altura do Encosto: 82 cm com ajuste angular de 90-180 graus {"\n"}
-            Altura do Assento ao Chão: 48-58 cm
-          </Text>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
+    )
+}
+*/
+return (
+        <SafeAreaView style={styles.container}>
+            <FlatList 
+                keyExtractor={(item) => item.id}
+                data={donations}
+                renderItem={({item}) => (
+                    <View style={styles.homeDonation}>
+                    <View style={styles.homeDonationName}>
+                        <Image
+                            source={item.imagemDoacao}
+                            style={styles.logoImage}
+                        />
+                        <Text style={styles.text}>{item.usuario.nome}</Text>
+                    </View>
+                    <View style={styles.homeDonationImage}>
+                        <Image
+                            source={item.imagemDoacao}
+                            style={styles.homeDonationImage}
+                        />
+                    </View>
+                    <View style={styles.homeDonationDescription}>
+                        <Text style={styles.donationDescriptionTitle}>
+                            {item.nomeDoacao}
+                        </Text>
+                        <Text style={styles.donationDescription}>
+                            {item.descricaoDoacao}
+                        </Text>
+                    </View>
+                </View>
+                )}
+            />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#a24fb0",
-  },
-  homeDonation: {
-    backgroundColor: "purple",
-    marginTop: 50,
-  },
-  homeDonationName: {
-    marginTop: 10,
-    padding: 20,
-    flexDirection: "row",
-  },
-  logoImage: {
-    width: 75,
-    height: 75,
-    borderRadius: 100,
-    marginTop: 10,
-  },
-  text: {
-    color: "white",
-    fontSize: 20,
-    marginTop: 30,
-    marginLeft: 30,
-  },
-  homeDonationImage: {
-    width: 425,
-    height: 425,
-    marginTop: 10,
-  },
-  homeDonationDescription: {
-    marginTop: 10,
-    padding: 10,
-  },
-  donationDescriptionTitle: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  donationDescription: {
-    color: "white",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#a24fb0",
+    },
+    homeDonation: {
+        backgroundColor: "purple",
+        marginTop: 50,
+    },
+    homeDonationName: {
+        marginTop: 10,
+        padding: 20,
+        flexDirection: "row",
+    },
+        logoImage: {
+        width: 75,
+        height: 75,
+        borderRadius: 100,
+        marginTop: 10,
+    },
+    text: {
+        color: "white",
+        fontSize: 20,
+        marginTop: 30,
+        marginLeft: 30,
+    },
+    homeDonationImage: {
+        width: 425,
+        height: 425,
+        marginTop: 10,
+    },
+    homeDonationDescription: {
+        marginTop: 10,
+        padding: 10,
+    },
+    donationDescriptionTitle: {
+        color: "white",
+        fontWeight: "bold",
+    },
+    donationDescription: {
+        color: "white",
+    },
 });

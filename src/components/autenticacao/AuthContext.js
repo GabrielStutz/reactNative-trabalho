@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext();
 
 export function obterUrlBase() {
-  return "https://01bc-2804-1b2-8180-b647-f8af-223b-dad0-4407.ngrok-free.app";
+  return "https://b95d-2804-41b0-ffff-a2a1-e0d9-892-9abe-292b.ngrok-free.app";
 }
 
 export const AuthProvider = ({ children }) => {
