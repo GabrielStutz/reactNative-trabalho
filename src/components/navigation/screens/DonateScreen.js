@@ -1,13 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"; 
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { textStyles } from "../../Fonts";
 
 const Stack = createStackNavigator();
-
 const locations = [
   {
     title: "Jaqueta doação",
-    description: "Uma bela jaqueta de mulher",
     image: require("../../../../assets/Jaqueta.jpg"),
   },
 ];
@@ -24,21 +23,6 @@ const LocationCard = ({ location, navigation }) => {
         <Image source={location.image} style={styles.locationImage} />
       )}
       <Text style={styles.locationDescription}>{location.description}</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-        
-        }}
-      >
-        <Text style={styles.buttonText}>Compartilhar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-        }}
-      >
-        <Text style={styles.buttonText}>Pegar a rota</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -50,9 +34,12 @@ export const DonateScreen = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.navigate("User")}
       >
-        <Text style={styles.backButtonText}>ᐊ</Text>
+          <View style={styles.headerTextContainer}>
+        <Text style={styles.backButtonText}>ᐊ        </Text>
+        <Text style={textStyles.subtituloNeg}>Minhas doações</Text>
+        </View>
       </TouchableOpacity>
-      <Text style={styles.title}>Minhas doações</Text>
+      <Text></Text>
       {locations.map((location, index) => (
         <LocationCard key={index} location={location} navigation={navigation} />
       ))}
@@ -73,20 +60,6 @@ export const DetailsScreen = ({ route }) => {
       <Text style={styles.locationDescription}>
         {route.params.location.description}
       </Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-        }}
-      >
-        <Text style={styles.buttonText}>Compartilhar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-        }}
-      >
-        <Text style={styles.buttonText}>Pegar a rota</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -95,13 +68,11 @@ const App = ({ navigation }) => (
   <Stack.Navigator
     initialRouteName="Donate"
     screenOptions={{
-      headerStyle: { backgroundColor: "#a24fb0" },
-      headerShadowVisible: false,
-      headerTintColor: "white",
+      headerShown: false,
     }}
   >
     <Stack.Screen
-      name="Doações"
+      name="Minhas doações"
       component={DonateScreen}
       navigation={navigation}
     />
@@ -117,32 +88,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#a24fb0",
-    padding: 20,
+    padding: 30,
+    
   },
-  title: {
-    fontSize: 24,
-    color: "white",
-    marginBottom: 20,
+  headerTextContainer: {
+    flexDirection: "row", 
+    alignItems: "center", 
   },
   card: {
-    backgroundColor: "white",
     backgroundColor: "white",
     padding: 20,
     marginBottom: 20,
     borderRadius: 10,
   },
   locationText: {
-    fontSize: 18,
+    fontSize: 25,
+    fontWeight: "bold",
     color: "purple",
     marginBottom: 10,
+    textAlign: "center"
   },
   locationImage: {
-    width: 200, 
+    marginLeft: 50,
+    width: 200,
     height: 200,
     borderRadius: 10,
   },
   locationDescription: {
     fontSize: 16,
+    fontWeight: "bold",
     color: "black",
     marginBottom: 10,
   },
@@ -161,13 +135,15 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   backButtonText: {
-    fontSize: 24,
+    marginLeft:10,
+    fontSize: 35,
     color: "white",
+    fontWeight: "bold",
   },
   locationTitle: {
     fontSize: 18,
     color: "ss",
-    fontWeight: "bold", 
+    fontWeight: "bold",
     marginBottom: 10,
   },
   locationDescription: {

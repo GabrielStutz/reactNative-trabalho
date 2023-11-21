@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text } from "react-native";
 
 // Screens
@@ -34,7 +33,7 @@ function TabNavigator({ navigation }) {
   const userAuth = useContext(AuthContext);
 
   useEffect(() => {
-    console.log("fodase fodase fodase", userAuth.userToken);
+    console.log("AAAAAAAA", userAuth.userToken);
 
     if (!userAuth.userToken) {
       navigation.navigate(loginName);
@@ -45,12 +44,7 @@ function TabNavigator({ navigation }) {
     <Tab.Navigator
       initialRouteName={loginName}
       screenOptions={({ route }) => ({
-        // tabBarStyle: {
-        //   activeTintColor: 'purple',
-        //   inactiveTintColor: '#050038',
-        //   labelStyle: { paddingBottom: 10, fontSize: 10 },
-        //   style: { padding: 10, height: 70 },
-        // },
+        headerTransparent: true,
         headerShown: false,
         tabBarIcon: ({ focused, size }) => {
           let iconName;
@@ -83,11 +77,13 @@ function TabNavigator({ navigation }) {
         name={loginName}
         component={LoginScreen}
         options={{ tabBarItemStyle: { display: "none" } }}
+        //options={{ tabBarStyle: { display: "none" } }}
       />
       <Tab.Screen
         name={registerName}
         component={RegisterScreen}
         options={{ tabBarItemStyle: { display: "none" } }}
+        
       />
       <Tab.Screen
         name={infoName}
@@ -107,8 +103,9 @@ function TabNavigator({ navigation }) {
       <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={createName} component={CreateButtonScreen} />
       <Tab.Screen name={userName} component={UserScreen} />
+      <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' }, }}
+      />
     </Tab.Navigator>
   );
 }
-
 export default TabNavigator;

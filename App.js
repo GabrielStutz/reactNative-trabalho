@@ -4,8 +4,6 @@ import {
   AuthContext,
   AuthProvider,
 } from "./src/components/autenticacao/AuthContext";
-import NavigationMain from "./src/components/navigation/NavigationMain";
-import { useNavigation } from "@react-navigation/native";
 import TabNavigator from "./src/components/navigation/TabNavigator";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
