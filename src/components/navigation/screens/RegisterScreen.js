@@ -140,15 +140,11 @@ const RegisterScreen = ({ navigation }) => {
           O campo confirmar senha é obrigatório.
         </Text>
       )}
-      <TouchableOpacity
+      <TouchableOpacity>
+      <Text style={styles.buttonText}>Cadastrar</Text>  
         style={styles.registerButton}
         onPress={cadastrarUsuario}
-      >
-        <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
-      <Text style={styles.loginButton} onPress={goToLogin}>
-        Logar
-      </Text>
     </SafeAreaView>
   );
 };

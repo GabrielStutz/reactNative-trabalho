@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Text } from "react-native";
+import { useRoute } from '@react-navigation/native';
 
 // Screens
 import HomeScreen from "./screens/HomeScreen";
@@ -31,14 +32,6 @@ const Tab = createBottomTabNavigator();
 function TabNavigator({ navigation }) {
   const [tokenChecked, setTokenChecked] = useState(false);
   const userAuth = useContext(AuthContext);
-
-  useEffect(() => {
-    console.log("AAAAAAAA", userAuth.userToken);
-
-    if (!userAuth.userToken) {
-      navigation.navigate(loginName);
-    }
-  }, [navigation]);
 
   return (
     <Tab.Navigator

@@ -12,44 +12,8 @@ const UserScreen = ({ navigation }) => {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    fetchUsers();
     getImageFromParams();
   }, []);
-
-    // Função para obter dados do usuário
-  const fetchUsers = () => {
-    const token = AsyncStorage.getItem('userToken');
-    const url = `${obterUrlBase()}/autenticacao/authenticated`;
-    fetch(url,
-      {
-        method: "GET",
-        headers: {
-        Accept: "application/json",
-          "Content-Type": "application/json;charset=UTF-8",
-          "Authorization": `Bearer ${token}` 
-        },
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(
-            `Erro na solicitação: ${res.status} - ${res.statusText}`
-          );
-        }
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Dados do usuário recebidos:", data);
-        if (Array.isArray(data) && data.length > 0) {
-          setUserData(data[0]);
-        } else {
-          console.error("Formato de dados inválido ou array vazia");
-        }
-      })
-      .catch((error) => {
-        console.error("Erro ao obter dados do usuário:", error.message);
-      });
-  };
 
     // Função para obter imagem do parâmetro de rota
   const getImageFromParams = () => {

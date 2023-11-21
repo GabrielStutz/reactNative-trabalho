@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, SafeAreaView, Button, TextInput, TouchableOpacity, FlatList } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity, FlatList } from "react-native";
 import { textStyles } from "../../Fonts.js";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
 
 export default function DescScreen({ navigation }) {
   const [nome, setNome] = useState("");
@@ -8,12 +9,24 @@ export default function DescScreen({ navigation }) {
   const [quantidade, setQuantidade] = useState("");
   const [categoria, setCategoria] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [categorias, setCategorias] = useState([]);
 
-  const categorias = [
-    { id: 1, label: "Categoria 1" },
-    { id: 2, label: "Categoria 2" },
-    { id: 3, label: "Categoria 3" },
-  ];
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const url = `${obterUrlBase()}/api/categoria`
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data)
+
+        setCategorias(data);
+      } catch (error) {
+        console.error('Erro ao buscar categorias:', error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
 
   const handleAdicionar = () => {
     console.log('Nome:', nome);
@@ -26,8 +39,8 @@ export default function DescScreen({ navigation }) {
     <TouchableOpacity
       style={styles.categoriaItem}
       onPress={() => {
-        setCategoria(item.label);
-        setIsModalVisible(false);
+        setCategoria(item.nomeCategoria);
+        setIsModalVisible(true);
       }}
     >
       <Text>{item.label}</Text>
@@ -44,7 +57,7 @@ export default function DescScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-    <Text></Text>
+      <Text></Text>
       <Text style={textStyles.subtituloNeg}>Fazer doação</Text>
       <View style={styles.containerText}>
         <Text style={textStyles.paragrafoNeg}>Nome do produto</Text>
@@ -57,7 +70,7 @@ export default function DescScreen({ navigation }) {
           placeholder="Nome"
           value={nome}
         />
-      <Text></Text>
+        <Text></Text>
         <View style={styles.inlineContainer}>
           <View style={styles.inlineItem}>
             <Text style={textStyles.paragrafoNeg}>Quantidade</Text>
