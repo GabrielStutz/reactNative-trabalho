@@ -69,13 +69,12 @@ function TabNavigator({ navigation }) {
       <Tab.Screen
         name={loginName}
         component={LoginScreen}
-        options={{ tabBarItemStyle: { display: "none" } }}
-        //options={{ tabBarStyle: { display: "none" } }}
+        options={{ tabBarStyle: { display: "none" } }}
       />
       <Tab.Screen
         name={registerName}
         component={RegisterScreen}
-        options={{ tabBarItemStyle: { display: "none" } }}
+        options={{ tabBarStyle: { display: "none" } }}
         
       />
       <Tab.Screen
