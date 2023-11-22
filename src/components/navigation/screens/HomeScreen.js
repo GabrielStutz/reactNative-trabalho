@@ -2,13 +2,26 @@ import React, { useEffect, useContext, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Image, FlatList } from "react-native";
 import { AuthContext } from "../../autenticacao/AuthContext";
 import { loginName } from "../TabNavigator";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen({ navigation }) {
   const userAuth = useContext(AuthContext);
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const [doacaoData, setDoacaoData] = useState({
+    id: 0,
+    nome: "",
+    descricao: "",
+    situacao: "",
+    file: "",
+    categoria: "",
+    categoriaId: 0,
+    quantidade: 0,
+    vendedorId: 0,
+    vendedorNome: "",
+    userFile: "",
+    endereco: []
+  });
 
   useEffect(() => {
 
@@ -17,97 +30,53 @@ export default function HomeScreen({ navigation }) {
     }
   }, []);
 
-  const fetchUsers = () => {
-    fetch(
-      "https://dcf3-2804-1b0-1903-81d4-3858-2faa-334c-7ffd.ngrok-free.app/api/user",
-      {
-        method: "GET",
-        headers: {
-          Origin: "*",
+  useEffect(() => {
+    const fetchDoacoes = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const token = await AsyncStorage.getItem('userToken');
+        const url = `${obterUrlBase()}/api/doacao`
+        const response = await fetch(url, {
+          method: "GET",
           Accept: "application/json",
           "Content-Type": "application/json;charset=UTF-8",
-        },
+          "Authorization": `Bearer ${token}`
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Erro na solicitação: ${response.status} - ${response.statusText}`
+          );
+        }
+
+        const data = await response.json();
+        console.log(data)
+        setDoacaoData(data);
+      } catch {
+        console.error("Erro ao obter as doações:", error.message);
       }
-    )
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-  };
+    };
+    
+    fetchDoacoes();
+  }, []);
 
-const [donations, setDonations] = useState([
-    {
-        id: 1,
-        nome: 'Cadeira de rodas',
-        descricao: 'Uma cadeira de rodas em bom estado',
-        situacao: 'PUBLICADO',
-        file: null,
-        categoria: 'eletronico',
-        categoriaId: 1,
-        quantidade: 3,
-        vendedorId: 1,
-        vendedorNome: 'teste 2',
-        userFile: null,
-        endereco: {
-          id: 1,
-          rua: 'rua fudida',
-          cidade: 'rolandia',
-          uf: 'PR',
-          userId: 1,
-          userNome: 'teste 2',
-        },
-        imagemDoacao: require('../../../../assets/cadeira.webp'),
-        usuario: {
-            idUser: 1,
-            nome: 'Maria Silva',
-            imagem: require('../../../../assets/imagem_perfil_mickey.webp'),
-        },
-    },
-    {
-        id: 2,
-        nome: 'Roupas de Inverno',
-        descricao: 'Conjunto de roupas quentes para adultos e crianças',
-        situacao: 'PUBLICADO',
-        file: null,
-        categoria: 'Eletronico',
-        categoriaId: 1,
-        quantidade: 3,
-        vendedorId: 1,
-        vendedorNome: 'teste 2',
-        userFile: null,
-        endereco: {
-          id: 1,
-          rua: 'rua fudida',
-          cidade: 'rolandia',
-          uf: 'PR',
-          userId: 1,
-          userNome: 'teste 2',
-        },
-        imagemDoacao: require('../../../../assets/Jaqueta.jpg'),
-        usuario: {
-            idUser: 2,
-            nome: 'João Oliveira',
-            imagem: require('../../../../assets/imagem_perfil_mickey.webp'),
-        },
-    },
-])
-
-return (
+  return (
     <SafeAreaView style={styles.container}>
-      <FlatList 
+      <FlatList
         keyExtractor={(item) => item.id}
-        data={donations}
+        data={doacaoData}
         renderItem={({ item }) => (
           <View style={styles.homeDonation}>
             <View style={styles.homeDonationName}>
               <Image
-                source={item.usuario.imagem}
+                source={{uri: item.userFile}}
                 style={styles.logoImage}
               />
-              <Text style={styles.text}>{item.usuario.nome}</Text>
+              <Text style={styles.text}>{item.vendedorNome}</Text>
             </View>
             <View style={styles.homeDonationImage}>
               <Image
-                source={item.imagemDoacao}
+                source={item.file}
                 style={styles.homeDonationImage}
               />
             </View>
@@ -133,46 +102,46 @@ return (
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#a24fb0",
-    },
-    homeDonation: {
-        backgroundColor: "purple",
-        marginTop: 50,
-    },
-    homeDonationName: {
-        marginTop: 10,
-        padding: 20,
-        flexDirection: "row",
-    },
-    logoImage: {
-        width: 75,
-        height: 75,
-        borderRadius: 100,
-        marginTop: 10,
-    },
-    text: {
-        color: "white",
-        fontSize: 20,
-        marginTop: 30,
-        marginLeft: 30,
-    },
-    homeDonationImage: {
-        width: 425,
-        height: 425,
-        marginTop: 10,
-        backgroundColor: "white",
-    },
-    homeDonationDescription: {
-        marginTop: 10,
-        padding: 10,
-    },
-    donationDescriptionTitle: {
-        color: "white",
-        fontWeight: "bold",
-    },
-    donationDescription: {
-        color: "white",
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#a24fb0",
+  },
+  homeDonation: {
+    backgroundColor: "purple",
+    marginTop: 50,
+  },
+  homeDonationName: {
+    marginTop: 10,
+    padding: 20,
+    flexDirection: "row",
+  },
+  logoImage: {
+    width: 75,
+    height: 75,
+    borderRadius: 100,
+    marginTop: 10,
+  },
+  text: {
+    color: "white",
+    fontSize: 20,
+    marginTop: 30,
+    marginLeft: 30,
+  },
+  homeDonationImage: {
+    width: 425,
+    height: 425,
+    marginTop: 10,
+    backgroundColor: "white",
+  },
+  homeDonationDescription: {
+    marginTop: 10,
+    padding: 10,
+  },
+  donationDescriptionTitle: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  donationDescription: {
+    color: "white",
+  },
 });

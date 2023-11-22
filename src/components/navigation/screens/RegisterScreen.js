@@ -19,7 +19,7 @@ const RegisterScreen = ({ navigation }) => {
   const [email, onChangeEmail] = useState("");
   const [senha, onChangePassword] = useState("");
   const [confirmaSenha, onChangeConfirmPassword] = useState("");
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState("https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg");
 
   const cadastrarUsuario = async () => {
     try {

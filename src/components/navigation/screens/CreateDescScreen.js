@@ -76,7 +76,6 @@ export default function DescScreen({ navigation }) {
             try {
                 const userId = await AsyncStorage.getItem("userId");
                 const token = await AsyncStorage.getItem('userToken');
-                console.log(userId)
                 const url = `${obterUrlBase()}/api/endereco/user/${userId}`
                 const response = await fetch(
                     url, {
