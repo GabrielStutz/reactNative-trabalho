@@ -6,6 +6,7 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  ScrollView
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -49,6 +50,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+    <ScrollView>
       <Image
         source={require("../../../../assets/helpii_logo.png")}
         style={styles.logoImage}
@@ -82,6 +84,7 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.registerButton} onPress={goToRegister}>
         Cadastrar
       </Text>
+      </ScrollView>
     </SafeAreaView>
   );
 };

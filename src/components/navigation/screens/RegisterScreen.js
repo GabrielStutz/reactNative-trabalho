@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  ScrollView
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loginName } from "../TabNavigator";
@@ -63,6 +64,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+    <ScrollView>
       <Image
         source={require("../../../../assets/helpii_logo.png")}
         style={styles.logoImage}
@@ -149,6 +151,7 @@ const RegisterScreen = ({ navigation }) => {
 >
   <Text style={styles.buttonText}>Cadastrar</Text>
 </TouchableOpacity>
+</ScrollView>
     </SafeAreaView>
   );
 };

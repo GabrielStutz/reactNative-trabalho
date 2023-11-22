@@ -112,7 +112,8 @@ function TabNavigator({ navigation }) {
       />
       <Tab.Screen 
       name={locationName} 
-      component={LocationScreen} 
+      component={LocationScreen}
+      options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' }, }}
       />
     </Tab.Navigator>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,6 +30,10 @@ const LocationScreen = () => {
 
             if (response.ok) {
                 console.log('Endereço cadastrado com sucesso!');
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Desc' }],
+                });
             } else {
                 console.error('Falha ao cadastrar endereço. Status:', response.status);
             }
@@ -38,9 +42,9 @@ const LocationScreen = () => {
         }
     };
 
-    const [rua, onChangeRua] = React.useState('');
-    const [cidade, onChangeCidade] = React.useState('');
-    const [uf, onChangeUF] = React.useState('');
+    const [rua, onChangeRua] = useState('');
+    const [cidade, onChangeCidade] = useState('');
+    const [uf, onChangeUF] = useState('');
 
     return (
         <SafeAreaView style={styles.container}>
