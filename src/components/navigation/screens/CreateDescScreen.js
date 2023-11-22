@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity, FlatList } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView, TextInput, TouchableOpacity, FlatList,  ScrollView, } from "react-native";
 import { textStyles } from "../../Fonts.js";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -145,6 +145,7 @@ export default function DescScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
             <Text>{'\n'} {'\n'} {'\n'}</Text>
             <TouchableOpacity onPress={VoltaImage}>
                 <Text style={styles.BotaoVoltar}>{`ᐊ`}</Text>
@@ -202,6 +203,18 @@ export default function DescScreen({ navigation }) {
                         value={descricao}
                     />
 
+                <Text style={textStyles.paragrafoNeg}>File</Text>
+                <TextInput
+                    style={styles.textInputDesc}
+                    editable
+                    multiline
+                    numberOfLines={5}
+                    maxLength={200}
+                    onChangeText={(file) => setFile(file)}
+                    placeholder="Descricao"
+                    value={file}
+                />
+
                     <TouchableOpacity
                         style={styles.adicionarButton}
                         onPress={cadastrarDoacao}
@@ -223,7 +236,8 @@ export default function DescScreen({ navigation }) {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            )}
+                )}
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -286,7 +300,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 10,
         fontSize: 15,
-        height: 150,
+        height: 100,
     },
     quant: {
         textAlign: "center",

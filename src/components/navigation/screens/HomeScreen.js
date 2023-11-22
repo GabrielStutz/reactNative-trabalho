@@ -33,7 +33,6 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     const fetchDoacoes = async () => {
       try {
-        const userId = await AsyncStorage.getItem("userId");
         const token = await AsyncStorage.getItem('userToken');
         const url = `${obterUrlBase()}/api/doacao`
         const response = await fetch(url, {
@@ -76,7 +75,7 @@ export default function HomeScreen({ navigation }) {
             </View>
             <View style={styles.homeDonationImage}>
               <Image
-                source={item.file}
+                source={{uri : item.file}}
                 style={styles.homeDonationImage}
               />
             </View>

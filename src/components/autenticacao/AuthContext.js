@@ -30,20 +30,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  //   useEffect(() => {
-  //     const checkToken = async () => {
-  //       try {
-  //         const token = await AsyncStorage.getItem('userToken');
-  //         setUserToken(token);
-  //         setIsLoading(false);
-  //       } catch (error) {
-  //         console.error('Erro ao verificar o token:', error);
-  //       }
-  //     };
-
-  //     checkToken();
-  //   }, []);
-
   const value = {
     userToken,
     isLoading,

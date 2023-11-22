@@ -11,6 +11,7 @@ import * as ImagePicker from "expo-image-picker";
 import { textStyles } from "../../Fonts";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ImageResizer from 'react-native-image-resizer';
 
 const Info = () => {
   const FotoPerfilURL =
@@ -67,41 +68,53 @@ const Info = () => {
         base64: true,
         quality: 1,
       });
+  
       if (!result.canceled) {
-        const selectedImage = result.assets[0].base64;
-        navigation.navigate("User", { selectedImage });
-        setImage(selectedImage);
-
+        let selectedImage;
+  
+        if (result.uri) {
+          selectedImage = result.uri;
+        } else {
+          selectedImage = result.assets[0].uri;
+        }
+  
+        const resizedImage = await ImageResizer.createResizedImage(selectedImage, 800, 800, 'JPEG', 80);
+  
+        const finalImage = resizedImage.uri || selectedImage;
+  
+        navigation.navigate("User", { selectedImage: finalImage });
+        setImage(finalImage);
+  
         const token = await AsyncStorage.getItem('userToken');
         const userId = await AsyncStorage.getItem('userId');
-        console.log(token)
-        const url = `${obterUrlBase()}/api/user/atualizar-file/${userId}}`
-        console.log(selectedImage);
+        const url = `${obterUrlBase()}/api/user/atualizar-file/${userId}`;
+  
         const fileData = {
-          file: selectedImage,
-        }
-    
-        const response = await fetch(url,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
-              body: JSON.stringify(fileData),
-            }
-          }
-        );
+          file: finalImage,
+        };
+  
+        console.log(fileData);
+  
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify(fileData),
+        });
+  
         if (!response.ok) {
           throw new Error(
             `Erro na solicitação: ${response.status} - ${response.statusText}`
           );
         }
       }
-
     } catch (error) {
       console.error("Erro ao escolher imagem:", error.message);
     }
   };
+  
 
   return (
     <View style={styles.container}>

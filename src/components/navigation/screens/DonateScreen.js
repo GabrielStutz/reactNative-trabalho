@@ -57,7 +57,8 @@ export const DetailsScreen = ({ route }) => {
     const fetchUserData = async () => {
       try {
         const token = await AsyncStorage.getItem("userToken");
-        const url = `${obterUrlBase()}/api/doacao`;
+        const userId = await AsyncStorage.getItem("userId");
+        const url = `${obterUrlBase()}/api/doacao/doacoes-usuario${userId}`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -80,37 +81,7 @@ export const DetailsScreen = ({ route }) => {
     };
     fetchUserData();
   }, []);
-
-  useEffect(() => {
-    const fetchEnderecos = async () => {
-      try {
-        const userId = await AsyncStorage.getItem("userId");
-        const token = await AsyncStorage.getItem("userToken");
-        console.log(userId);
-
-        const url = `${obterUrlBase()}/api/endereco/user/${userId}`;
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = await response.json();
-        console.log("Enderecos:", data);
-
-        setEnderecos(data);
-        console.log(userId);
-        console.log(data);
-      } catch (error) {
-        console.error("Erro ao buscar categorias:", error);
-      }
-    };
-
-    fetchEnderecos();
-  }, []);
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{route.params.location.title}</Text>
