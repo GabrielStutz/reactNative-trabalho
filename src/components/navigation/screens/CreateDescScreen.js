@@ -143,12 +143,16 @@ export default function DescScreen({ navigation }) {
         />
     );
 
+    const VoltaImage = () => {
+        navigation.navigate("Image")
+      };
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text></Text>
-            <Text style={textStyles.subtituloNeg}>Fazer doação</Text>
-
+            <Text>{'\n'} {'\n'} {'\n'}</Text>
+            <TouchableOpacity onPress={VoltaImage}>
+            <Text style={styles.BotaoVoltar}>{`ᐊ`}</Text>
+            </TouchableOpacity>
             <View style={styles.containerText}>
                 <Text style={textStyles.paragrafoNeg}>Nome do produto</Text>
                 <TextInput
@@ -160,7 +164,7 @@ export default function DescScreen({ navigation }) {
                     placeholder="Nome"
                     value={nome}
                 />
-
+                <Text></Text>
                 <Text style={textStyles.paragrafoNeg}>Quantidade</Text>
                 <TextInput
                     style={styles.quant}
@@ -169,7 +173,7 @@ export default function DescScreen({ navigation }) {
                     value={quantidade}
                     onChangeText={(quantidade) => setQuantidade(quantidade)}
                 />
-
+                <Text></Text>
                 <Text style={textStyles.paragrafoNeg}>Categoria</Text>
                 <TouchableOpacity
                     style={styles.categoriaButton}
@@ -178,7 +182,7 @@ export default function DescScreen({ navigation }) {
                     <Text style={{ color: "#000" }}>{categoria || "Selecione a categoria"}</Text>
                 </TouchableOpacity>
                 {isModalVisible && renderCategoriaList()}
-
+                <Text></Text>
                 <Text style={textStyles.paragrafoNeg}>Endereço</Text>
                 <TouchableOpacity
                     style={styles.categoriaButton}
@@ -187,6 +191,7 @@ export default function DescScreen({ navigation }) {
                     <Text style={{ color: "#000" }}>{endereco || "Selecione o endereco"}</Text>
                 </TouchableOpacity>
                 {isModalVisible && renderEnderecoList()}
+                <Text></Text>
                 <Text style={textStyles.paragrafoNeg}>Descricao</Text>
                 <TextInput
                     style={styles.textInputDesc}
@@ -217,17 +222,17 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     containerText: {
-        top: 40,
+        top: 10,
         marginLeft: 50,
         marginRight: 50,
     },
     textInput: {
         textAlign: "center",
         backgroundColor: "#FFFFFF",
-        height: 50,
+        height: 40,
         padding: 10,
-        borderRadius: 10,
-        marginTop: 15,
+        borderRadius: 5,
+        marginTop: 10,
         fontSize: 15,
     },
     categoriaButton: {
@@ -235,16 +240,17 @@ const styles = StyleSheet.create({
         height: 40,
         width: 150,
         padding: 10,
-        borderRadius: 10,
-        marginTop: 15,
+        borderRadius: 5,
+        marginLeft: 50,
+        marginTop: 10,
         fontSize: 15,
-        alignItems: 'center',
+        alignItems: "center",
     },
     adicionarButton: {
         backgroundColor: "#FFFFFF",
         height: 40,
-        borderRadius: 10,
-        marginTop: 15,
+        borderRadius: 5,
+        marginTop: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -252,8 +258,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         backgroundColor: "#FFFFFF",
         height: 50,
-        borderRadius: 10,
-        marginTop: 15,
+        borderRadius: 5,
+        marginTop: 10,
         fontSize: 15,
         height: 150,
     },
@@ -262,21 +268,22 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         height: 50,
         padding: 10,
-        borderRadius: 10,
-        marginTop: 15,
+        borderRadius: 5,
+        marginTop: 10,
+        marginLeft: 100,
+        marginRight: 100,
         fontSize: 15,
-    },
-    inlineContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    inlineItem: {
-        flex: 1,
-        marginRight: 10,
     },
     categoriaItem: {
         padding: 1,
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
     },
+    BotaoVoltar: {
+        left: 20,
+        fontWeight: "bold",
+        color: "white",
+        fontSize: 30,
+        marginBottom: 10,
+      },
 });

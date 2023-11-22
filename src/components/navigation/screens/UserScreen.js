@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
 import { textStyles } from "../../Fonts";
 import coracao from "../../../../assets/Coracao.png";
 import rosto from "../../../../assets/Rosto.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserScreen = ({ route }) => {
   const navigation = useNavigation();
@@ -22,30 +24,65 @@ const UserScreen = ({ route }) => {
     }
   };
 
-  
-
   const irParaInfo = () => {
     navigation.navigate("Info", {
       defaultImage: image || "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg",
     });
   };
 
-    // Função para navegar para a tela de doações
   const irParaDonate = () => {
     navigation.navigate("Donate");
+  };
+
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem("userToken");
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Erro ao deslogar:", error.message);
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      const userId = await AsyncStorage.getItem("userId");
+      const token = await AsyncStorage.getItem("userToken");
+      const url = `${obterUrlBase()}/api/user/${userId}`;
+      
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        await AsyncStorage.removeItem("userToken");
+        navigation.navigate("Login");
+      } else {
+        const responseBody = await response.text();
+        console.error("Falha ao deletar usuário. Status:", response.status);
+        console.error("Detalhes da resposta:", responseBody);
+        Alert.alert("Erro", "Falha ao deletar usuário. Tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error.message);
+      Alert.alert("Erro", "Erro ao deletar usuário. Tente novamente.");
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
         {image ? (
-          <Image
-            source={{ uri: `data:image/png;base64,${image}` }}
-            style={styles.avatarFoto}
-          />
+          <Image source={{ uri: `data:image/png;base64,${image}` }} style={styles.avatarFoto} />
         ) : (
           <Image
-            source={{ uri: "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg" }}
+            source={{
+              uri:
+                "https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg",
+            }}
             style={styles.avatarFoto}
           />
         )}
@@ -70,6 +107,13 @@ const UserScreen = ({ route }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.Divisoria} />
+
+      <TouchableOpacity style={styles.button} onPress={logout}>
+        <Text style={textStyles.subtituloNeg}>Deslogar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={deleteUser}>
+        <Text style={textStyles.subtituloNeg}>Deletar Usuário</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -112,6 +156,13 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 16,
+  },
+  button: {
+    height: 40,
+    borderRadius: 10,
+    marginTop: 15,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ClickableImage from "../../ClickableImage.js";
@@ -11,8 +11,14 @@ export default function ImageScreen({ navigation }) {
     setImage(uri);
   };
 
+  const VoltaButton = () => {
+    navigation.navigate("Create")
+  };
   return (
     <View style={styles.view}>
+      <TouchableOpacity onPress={VoltaButton}>
+      <Text style={styles.BotaoVoltar}>{`ᐊ`}</Text>
+      </TouchableOpacity>
       <GestureHandlerRootView>
         <View style={styles.imageContainer}>
           <Text></Text>
@@ -65,5 +71,12 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  BotaoVoltar: {
+    right: 148,
+    fontWeight: "bold",
+    color: "white",
+    fontSize: 30,
+    bottom: 135,
   },
 });

@@ -7,9 +7,9 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { textStyles } from "../../Fonts";
 import { AuthContext, obterUrlBase } from "../../autenticacao/AuthContext";
 
 const Stack = createStackNavigator();
@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require("../../../../assets/HELPI.png")}
+        source={require("../../../../assets/helpii_logo.png")}
         style={styles.logoImage}
       />
       <Text style={styles.titulo}>Login</Text>
@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
         value={senha}
       />
       <TouchableOpacity style={styles.loginButton} onPress={logar}>
-        <Text style={styles.buttonText}>Logar</Text>
+        <Text style={textStyles.paragrafoNeg}>Logar</Text>
       </TouchableOpacity>
       <Text style={styles.registerButton} onPress={goToRegister}>
         Cadastrar
@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#FFFFFF",
+    fontWeight: "bold",
     fontSize: 15,
     marginTop: 15,
     marginLeft: 5,
@@ -129,9 +130,13 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   registerButton: {
-    color: "#1bd39d",
-    textAlign: "center",
+    color: "white",
+    backgroundColor: "purple",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
     marginTop: 10,
+    textAlign: "center",
     fontSize: 15,
   },
 });

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { loginName } from "../TabNavigator";
+import { textStyles } from "../../Fonts";
 import { obterUrlBase } from "../../autenticacao/AuthContext";
 
 const Stack = createStackNavigator(); 
@@ -63,7 +64,7 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
-        source={require("../../../../assets/HELPI.png")}
+        source={require("../../../../assets/helpii_logo.png")}
         style={styles.logoImage}
       />
       <Text style={styles.titulo}>Cadastro</Text>
