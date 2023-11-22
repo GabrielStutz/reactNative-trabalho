@@ -13,6 +13,7 @@ import CreateImageScreen from "./screens/CreateImageScreen";
 import CreateDescScreen from "./screens/CreateDescScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import LocationScreen from "./screens/LocationScreen";
 import { AuthContext } from "../autenticacao/AuthContext";
 
 //Screen names
@@ -24,6 +25,7 @@ const descName = "Desc";
 const donateName = "Donate";
 const infoName = "Info";
 const registerName = "Register";
+const locationName = "Location";
 export const loginName = "Login";
 
 const Tab = createBottomTabNavigator();
@@ -91,10 +93,26 @@ function TabNavigator({ navigation }) {
         component={CreateImageScreen}
         options={{ tabBarItemStyle: { display: 'none' } }}
       />
-      <Tab.Screen name={homeName} component={HomeScreen} />
-      <Tab.Screen name={createName} component={CreateButtonScreen} />
-      <Tab.Screen name={userName} component={UserScreen} />
-      <Tab.Screen name={donateName} component={DonateScreen} options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' }, }}
+      <Tab.Screen 
+      name={homeName} 
+      component={HomeScreen} 
+      />
+      <Tab.Screen 
+      name={createName} 
+      component={CreateButtonScreen} 
+      />
+      <Tab.Screen 
+      name={userName} 
+      component={UserScreen} 
+      />
+      <Tab.Screen 
+      name={donateName} 
+      component={DonateScreen} 
+      options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' }, }}
+      />
+      <Tab.Screen 
+      name={locationName} 
+      component={LocationScreen} 
       />
     </Tab.Navigator>
   );
