@@ -16,6 +16,7 @@ export default function DescScreen({ navigation }) {
     const [enderecoId, setEnderecoId] = useState("");
     const [enderecos, setEnderecos] = useState([]);
     const [file, setFile] = useState("");
+    const [hasAddress, setHasAddress] = useState(false);
 
     const cadastrarDoacao = async () => {
         try {
@@ -29,19 +30,15 @@ export default function DescScreen({ navigation }) {
                 file,
             };
 
-            console.log(userData);
-
-            const url = `${obterUrlBase()}/api/doacao`
-            const response = await fetch(url,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: JSON.stringify(userData),
-                }
-            );
+            const url = `${obterUrlBase()}/api/doacao`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify(userData),
+            });
 
             if (response.ok) {
                 console.log("Doacao cadastrada com sucesso!");
@@ -57,10 +54,9 @@ export default function DescScreen({ navigation }) {
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
-                const url = `${obterUrlBase()}/api/categoria`
+                const url = `${obterUrlBase()}/api/categoria`;
                 const response = await fetch(url);
                 const data = await response.json();
-                console.log(data)
 
                 setCategorias(data);
             } catch (error) {
@@ -76,30 +72,30 @@ export default function DescScreen({ navigation }) {
             try {
                 const userId = await AsyncStorage.getItem("userId");
                 const token = await AsyncStorage.getItem('userToken');
-                const url = `${obterUrlBase()}/api/endereco/user/${userId}`
-                const response = await fetch(
-                    url, {
+                const url = `${obterUrlBase()}/api/endereco/user/${userId}`;
+                const response = await fetch(url, {
                     method: "GET",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json;charset=UTF-8",
-                        "Authorization": `Bearer ${token}`
+                        "Authorization": `Bearer ${token}`,
                     },
                 });
                 const data = await response.json();
-                console.log(data)
 
                 setEnderecos(data);
-                console.log(userId);
-                console.log(data);
-
+                setHasAddress(data.length > 0);
             } catch (error) {
-                console.error('Erro ao buscar categorias:', error);
+                console.error('Erro ao buscar endereços:', error);
             }
         };
 
         fetchEnderecos();
     }, []);
+
+    const redirectToLocationScreen = () => {
+        navigation.navigate("Location");
+    };
 
     const renderCategoriaItem = ({ item }) => (
         <TouchableOpacity
@@ -119,7 +115,7 @@ export default function DescScreen({ navigation }) {
             style={styles.categoriaItem}
             onPress={() => {
                 setEndereco(item.rua);
-                setEnderecoId(item.id)
+                setEnderecoId(item.id);
                 setIsModalVisible(true);
             }}
         >
@@ -144,73 +140,90 @@ export default function DescScreen({ navigation }) {
     );
 
     const VoltaImage = () => {
-        navigation.navigate("Image")
-      };
+        navigation.navigate("Image");
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <Text>{'\n'} {'\n'} {'\n'}</Text>
             <TouchableOpacity onPress={VoltaImage}>
-            <Text style={styles.BotaoVoltar}>{`ᐊ`}</Text>
+                <Text style={styles.BotaoVoltar}>{`ᐊ`}</Text>
             </TouchableOpacity>
-            <View style={styles.containerText}>
-                <Text style={textStyles.paragrafoNeg}>Nome do produto</Text>
-                <TextInput
-                    style={styles.textInput}
-                    editable
-                    numberOfLines={1}
-                    maxLength={40}
-                    onChangeText={(nome) => setNome(nome)}
-                    placeholder="Nome"
-                    value={nome}
-                />
-                <Text></Text>
-                <Text style={textStyles.paragrafoNeg}>Quantidade</Text>
-                <TextInput
-                    style={styles.quant}
-                    keyboardType="numeric"
-                    placeholder="Quantidade"
-                    value={quantidade}
-                    onChangeText={(quantidade) => setQuantidade(quantidade)}
-                />
-                <Text></Text>
-                <Text style={textStyles.paragrafoNeg}>Categoria</Text>
-                <TouchableOpacity
-                    style={styles.categoriaButton}
-                    onPress={() => setIsModalVisible(true)}
-                >
-                    <Text style={{ color: "#000" }}>{categoria || "Selecione a categoria"}</Text>
-                </TouchableOpacity>
-                {isModalVisible && renderCategoriaList()}
-                <Text></Text>
-                <Text style={textStyles.paragrafoNeg}>Endereço</Text>
-                <TouchableOpacity
-                    style={styles.categoriaButton}
-                    onPress={() => setIsModalVisible(true)}
-                >
-                    <Text style={{ color: "#000" }}>{endereco || "Selecione o endereco"}</Text>
-                </TouchableOpacity>
-                {isModalVisible && renderEnderecoList()}
-                <Text></Text>
-                <Text style={textStyles.paragrafoNeg}>Descricao</Text>
-                <TextInput
-                    style={styles.textInputDesc}
-                    editable
-                    multiline
-                    numberOfLines={5}
-                    maxLength={40}
-                    onChangeText={(descricao) => setDescricao(descricao)}
-                    placeholder="Descricao"
-                    value={descricao}
-                />
 
-                <TouchableOpacity
-                    style={styles.adicionarButton}
-                    onPress={cadastrarDoacao}
-                >
-                    <Text style={{ color: "#000", fontSize: 16, fontWeight: "bold", }}>Adicionar</Text>
-                </TouchableOpacity>
-            </View>
+            {hasAddress ? (
+                <View style={styles.containerText}>
+                    <Text style={textStyles.paragrafoNeg}>Nome do produto</Text>
+                    <TextInput
+                        style={styles.textInput}
+                        editable
+                        numberOfLines={1}
+                        maxLength={40}
+                        onChangeText={(nome) => setNome(nome)}
+                        placeholder="Nome"
+                        value={nome}
+                    />
+                    <Text></Text>
+                    <Text style={textStyles.paragrafoNeg}>Quantidade</Text>
+                    <TextInput
+                        style={styles.quant}
+                        keyboardType="numeric"
+                        placeholder="Quantidade"
+                        value={quantidade}
+                        onChangeText={(quantidade) => setQuantidade(quantidade)}
+                    />
+                    <Text></Text>
+                    <Text style={textStyles.paragrafoNeg}>Categoria</Text>
+                    <TouchableOpacity
+                        style={styles.categoriaButton}
+                        onPress={() => setIsModalVisible(true)}
+                    >
+                        <Text style={{ color: "#000" }}>{categoria || "Selecione a categoria"}</Text>
+                    </TouchableOpacity>
+                    {isModalVisible && renderCategoriaList()}
+                    <Text></Text>
+                    <Text style={textStyles.paragrafoNeg}>Endereço</Text>
+                    <TouchableOpacity
+                        style={styles.categoriaButton}
+                        onPress={() => setIsModalVisible(true)}
+                    >
+                        <Text style={{ color: "#000" }}>{endereco || "Selecione o endereco"}</Text>
+                    </TouchableOpacity>
+                    {isModalVisible && renderEnderecoList()}
+                    <Text></Text>
+                    <Text style={textStyles.paragrafoNeg}>Descrição</Text>
+                    <TextInput
+                        style={styles.textInputDesc}
+                        editable
+                        multiline
+                        numberOfLines={5}
+                        maxLength={40}
+                        onChangeText={(descricao) => setDescricao(descricao)}
+                        placeholder="Descricao"
+                        value={descricao}
+                    />
+
+                    <TouchableOpacity
+                        style={styles.adicionarButton}
+                        onPress={cadastrarDoacao}
+                    >
+                        <Text style={{ color: "#000", fontSize: 16, fontWeight: "bold" }}>Adicionar</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <View style={styles.noAddressContainer}>
+                    <Text style={textStyles.paragrafoNeg}>
+                        Você não possui um endereço cadastrado.
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.addAddressButton}
+                        onPress={redirectToLocationScreen}
+                    >
+                        <Text style={{ color: "#000", fontSize: 16, fontWeight: "bold" }}>
+                            Adicionar Endereço
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </SafeAreaView>
     );
 }
@@ -225,6 +238,18 @@ const styles = StyleSheet.create({
         top: 10,
         marginLeft: 50,
         marginRight: 50,
+    },
+    noAddressContainer: {
+        marginTop: 20,
+        alignItems: "center",
+    },
+    addAddressButton: {
+        backgroundColor: "#FFFFFF",
+        height: 40,
+        borderRadius: 5,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     textInput: {
         textAlign: "center",
@@ -285,5 +310,5 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 30,
         marginBottom: 10,
-      },
+    },
 });
