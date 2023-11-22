@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Text } from "react-native";
-import { useRoute } from '@react-navigation/native';
 
 // Screens
 import HomeScreen from "./screens/HomeScreen";
@@ -69,12 +68,12 @@ function TabNavigator({ navigation }) {
       <Tab.Screen
         name={loginName}
         component={LoginScreen}
-        options={{ tabBarStyle: { display: "none" } }}
+        options={{ tabBarStyle: { display: "none" }, tabBarItemStyle: { display: "none" }  }}
       />
       <Tab.Screen
         name={registerName}
         component={RegisterScreen}
-        options={{ tabBarStyle: { display: "none" } }}
+        options={{ tabBarStyle: { display: "none" }, tabBarItemStyle: { display: "none" }  }}
         
       />
       <Tab.Screen

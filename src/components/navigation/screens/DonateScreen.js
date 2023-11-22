@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { textStyles } from "../../Fonts";
+import { obterUrlBase } from "../../autenticacao/AuthContext";
 
 const Stack = createStackNavigator();
 const locations = [
@@ -34,9 +36,9 @@ export const DonateScreen = ({ navigation }) => {
         style={styles.backButton}
         onPress={() => navigation.navigate("User")}
       >
-          <View style={styles.headerTextContainer}>
-        <Text style={styles.backButtonText}>ᐊ        </Text>
-        <Text style={textStyles.subtituloNeg}>Minhas doações</Text>
+        <View style={styles.headerTextContainer}>
+          <Text style={styles.backButtonText}>ᐊ </Text>
+          <Text style={textStyles.subtituloNeg}>Minhas doações</Text>
         </View>
       </TouchableOpacity>
       <Text></Text>
@@ -48,6 +50,67 @@ export const DonateScreen = ({ navigation }) => {
 };
 
 export const DetailsScreen = ({ route }) => {
+  const [userData, setUserData] = useState(null);
+  const [enderecos, setEnderecos] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = await AsyncStorage.getItem("userToken");
+        const url = `${obterUrlBase()}/api/doacao`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error(
+            `Erro na solicitação: ${response.status} - ${response.statusText}`
+          );
+        }
+        const data = await response.json();
+        console.log("UserData:", data);
+        setUserData(data);
+      } catch (error) {
+        console.error("Erro ao obter dados do usuário:", error.message);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const fetchEnderecos = async () => {
+      try {
+        const userId = await AsyncStorage.getItem("userId");
+        const token = await AsyncStorage.getItem("userToken");
+        console.log(userId);
+
+        const url = `${obterUrlBase()}/api/endereco/user/${userId}`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log("Enderecos:", data);
+
+        setEnderecos(data);
+        console.log(userId);
+        console.log(data);
+      } catch (error) {
+        console.error("Erro ao buscar categorias:", error);
+      }
+    };
+
+    fetchEnderecos();
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{route.params.location.title}</Text>
@@ -57,9 +120,35 @@ export const DetailsScreen = ({ route }) => {
           style={styles.locationImage}
         />
       )}
-      <Text style={styles.locationDescription}>
-        {route.params.location.description}
-      </Text>
+      <Text></Text>
+
+      {userData && (
+        <View>
+          <Text style={styles.productInfo}>
+            Nome do Produto: {userData.nome}
+          </Text>
+          <Text style={styles.productInfo}>
+            Categoria: {userData.categoria}
+          </Text>
+          <Text style={styles.productInfo}>
+            Quantidade: {userData.quantidade}
+          </Text>
+          <Text style={styles.productInfo}>
+            Descrição: {userData.descricao}
+          </Text>
+          <Text style={styles.productInfo}>Endereço:</Text>
+          {userData &&
+            userData.enderecos &&
+            userData.enderecos.map((endereco, index) => (
+              <View key={index}>
+                <Text style={styles.addressInfo}>{endereco.rua}</Text>
+                <Text style={styles.addressInfo}>
+                  {endereco.cidade} / {endereco.uf}
+                </Text>
+              </View>
+            ))}
+        </View>
+      )}
     </View>
   );
 };
@@ -89,11 +178,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#a24fb0",
     padding: 30,
-    
   },
   headerTextContainer: {
-    flexDirection: "row", 
-    alignItems: "center", 
+    flexDirection: "row",
+    alignItems: "center",
   },
   card: {
     backgroundColor: "white",
@@ -106,13 +194,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "purple",
     marginBottom: 10,
-    textAlign: "center"
+    textAlign: "center",
   },
   locationImage: {
-    marginLeft: 50,
-    width: 200,
-    height: 200,
-    borderRadius: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    width: 300,
+    height: 300,
+    borderRadius: 0,
   },
   locationDescription: {
     fontSize: 16,
@@ -135,7 +224,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   backButtonText: {
-    marginLeft:10,
+    marginLeft: 10,
     fontSize: 35,
     color: "white",
     fontWeight: "bold",
@@ -152,6 +241,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   locationDescriptionWhite: {
+    fontSize: 16,
+    color: "white",
+    marginBottom: 10,
+  },
+
+  productInfo: {
+    fontSize: 18,
+    color: "white",
+    marginBottom: 10,
+  },
+
+  addressInfo: {
     fontSize: 16,
     color: "white",
     marginBottom: 10,
