@@ -26,9 +26,6 @@ const LoginScreen = ({ navigation }) => {
 
   const logar = async () => {
     try {
-      console.log(email);
-      console.log(senha);
-      console.log(obterUrlBase())
       const url = `${obterUrlBase()}/autenticacao/login?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`;
       const response = await fetch(url, {
         method: "POST",

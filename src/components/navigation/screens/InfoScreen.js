@@ -25,7 +25,6 @@ const Info = () => {
     telefone: "",
   });
 
-  // Efeito para obter dados do usuário ao carregar o componente
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -34,13 +33,13 @@ const Info = () => {
         const url = `${obterUrlBase()}/autenticacao/authenticated`
         const response = await fetch(
           url, {
-            method: "GET",
-            headers: {
+          method: "GET",
+          headers: {
             Accept: "application/json",
-              "Content-Type": "application/json;charset=UTF-8",
-              "Authorization": `Bearer ${token}` 
-            },
-          }
+            "Content-Type": "application/json;charset=UTF-8",
+            "Authorization": `Bearer ${token}`
+          },
+        }
         );
         if (!response.ok) {
           throw new Error(
@@ -60,7 +59,6 @@ const Info = () => {
     navigation.navigate("User")
   };
 
-    // Função para lidar com a escolha da imagem da galeria
   const handleImagePicker = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -73,7 +71,33 @@ const Info = () => {
         const selectedImage = result.assets[0].base64;
         navigation.navigate("User", { selectedImage });
         setImage(selectedImage);
+
+        const token = await AsyncStorage.getItem('userToken');
+        const userId = await AsyncStorage.getItem('userId');
+        console.log(token)
+        const url = `${obterUrlBase()}/api/user/atualizar-file/${userId}}`
+        console.log(selectedImage);
+        const fileData = {
+          file: selectedImage,
+        }
+    
+        const response = await fetch(url,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+              body: JSON.stringify(fileData),
+            }
+          }
+        );
+        if (!response.ok) {
+          throw new Error(
+            `Erro na solicitação: ${response.status} - ${response.statusText}`
+          );
+        }
       }
+
     } catch (error) {
       console.error("Erro ao escolher imagem:", error.message);
     }
